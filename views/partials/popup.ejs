@@ -1,0 +1,167 @@
+<div id="loginPopup" class="popup">
+    <div class="popup-content">
+        <h2 class="" style="margin-top: 1rem; margin-bottom: 2rem;">Login </h2> 
+        <button  class="closeAll btn" style="position:absolute; color: red; top: 1rem; right: 1rem; background-color: transparent;border:1px solid rgb(114, 76, 27); font-size: 1rem;">X</button>
+ 
+        <form action="/login" method="post"> 
+           <div class="flex-col">
+           <div class="flex-col" style="align-items: start;">
+            <!-- <label for="email">Email Address</label>  -->
+            <input type="email" class="inputField" id="email" name="username"  placeholder="Enter Your Email ...">
+           </div>
+           <div class="flex-col" style="align-items: start; margin-top: 1rem;">
+
+            <!-- <label for="password">Password</label> -->
+            <input type="password"  class="inputField" id="password" name="password"  placeholder="Enter Your Password ..."> 
+            </div>
+            <input type="submit" id="loginButton" style="margin-top: 2rem;" value="Log In"> <br>
+            or <br>
+            <button type="button" id="swithToSignup"  style="margin-top: 1rem;">Sign Up</button>
+           </div>
+        </form>
+
+    </div>
+</div>
+
+<div id="signupPopup" class="popup">
+    <div class="popup-content">
+
+        <h2 class="" style="margin-top: 1rem; margin-bottom: 2rem;">Sign Up </h2> 
+        <button  class="closeAll btn" style="position:absolute; color: red; top: 1rem; right: 1rem; background-color: transparent; font-size: 1rem;">X</button>
+        <form action="/signup" method="post">
+            <div class="flex-col">
+                <div class="flex-row" style="align-items: start;gap: 1rem;">
+                 <!-- <label for="full_name">Full Name</label>  -->
+                 <input type="text" class="inputField" id="first_name" name="first_name"  placeholder=" First Name ...">
+                 <input type="text" class="inputField" id="last_name" name="last_name"  placeholder="Last Name ...">
+                </div>
+                <div class="flex-col" style="align-items: start;margin-top: 1rem;">
+                 <!-- <label for="email">Email Address</label>  -->
+                 <input type="email" class="inputField" id="email" name="email"  placeholder="Enter Your Email ...">
+                </div>
+                <div class="flex-col" style="align-items: start;margin-top: 1rem; position: relative;">
+                 <!-- <label for="phone">Phone</label>  -->
+                 <span style="position: absolute;top: 1.1rem;left: 1rem;">+966 - </span>
+                 <input type="tel" class="inputField" id="phone" name="phone"   style="width: 98%; padding-left: 4rem;"    placeholder="Enter Your Phone ....">
+                </div>
+                <div class="flex-col" style="align-items: start; margin-top: 1rem;">
+     
+                 <!-- <label for="password">Password</label> -->
+                 <input type="password" class="inputField" id="password" name="password"  pattern=".{8,}"  placeholder="Enter Your Password ..."> 
+                 <small class="text-start mt-2 ms-3" style="font-size: 10px;">
+                    Password Rules
+                    <ul>
+                        <li>Password Must contain 1 capital letter</li>
+                        <li>Password Must contain 1 special character</li>
+                        <li>Password Must contain 1 Number</li>
+                    </ul>
+                 </small>
+                 </div>
+                 <input type="submit" id="loginButton" style="margin-top: 2rem;" value="Sign Up"> <br>
+            or <br>
+            <button type="button" id="swithToLogin"  style="margin-top: 1rem;">Login</button>
+                </div>
+      
+        </form>
+
+    </div>
+</div>
+
+
+
+
+<% if(form === "login"){ %>
+    <div id="loginPopup" class="popup" style="display: flex; ">
+        <div class="popup-content">
+            <a  href="/" class=" btn" style="position:absolute; color: red; top: 1rem; right: 1rem; background-color: transparent; font-size: 1rem;">X</a>
+            <% if(msg.error){ %>
+            <p class="text-danger py-3 px-3 " style="font-weight: 500; width: 100%;"><%= msg.error ? msg.error : "" %></p>
+            <%}%>
+            <h2 class="" style="margin-top: 1rem; margin-bottom: 2rem;">Login </h2> 
+           
+            <form action="/login" method="post" style="width: 100%; margin: 1px auto;"> 
+               <div class="flex-col">
+               <div class="flex-col" style="align-items: start;">
+                <!-- <label for="email">Email Address</label>  -->
+               
+                <input type="email" class="inputField" id="email" value="<%= data &&  data.email %>" name="username" required placeholder="Enter Your Email ...">
+                <small class="text-danger my-1 text-start"><%= msg.email ? msg.email : "" %></small>
+
+               </div>
+               <div class="flex-col" style="align-items: start; margin-top: 1rem;">
+    
+                <!-- <label for="password">Password</label> -->
+                <input type="password" class="inputField" id="password"   name="password" required placeholder="Enter Your Password ..."> 
+                <small class="text-danger my-1 text-start"><%= msg.password ? msg.password : "" %></small>
+
+                </div>
+                <input type="submit" class="btn" style="background-color: #fbeace;margin-top: 2rem;margin-bottom: 1rem; border: 2px solid rgb(0, 0, 0);" value="Log In"> 
+                or <br>
+            <a href="/signup"  id="swithToSignup"  style="margin-top: 1rem;text-decoration: none;margin-right: 0px;">Sign Up</a>
+               </div>
+            </form>
+    
+        </div>
+    </div>
+
+<%}%>
+
+<% if(form === "signup"){ %>
+    <div id="loginPopup" class="popup" style="display: flex;">
+        <div class="popup-content">
+            <p class="text-danger py-3 px-5 " style="font-weight: 500; width: 100%;"><%=msg.email ? msg.email : ""%></p>
+            <h2 class="" style="margin-top: 1rem; margin-bottom: 2rem;">Sign Up </h2> 
+            <a  href="/" class=" btn" style="position:absolute; color: red; top: 1rem; right: 1rem; background-color: transparent; font-size: 1rem;">X</a>
+            <form action="/signup" method="post">
+                <div class="flex-col">
+                    <div class="flex-row" style="align-items: start;gap: 1rem;">
+                        <!-- <label for="full_name">Full Name</label>  -->
+                        <div class="d-flex flex-column">
+                            <input type="text" class="inputField" id="first_name" name="first_name"  placeholder=" First Name ...">
+                        <small style="font-size: 13px;" class="text-danger  my-1 text-start"><%= msg.first_name ? msg.first_name : "" %></small>
+                        </div>
+
+                        <div class="d-flex flex-column">
+                        <input type="text" class="inputField" id="last_name" name="last_name"  placeholder="Last Name ...">
+                        <small style="font-size: 13px;" class="text-danger  my-1 text-start"><%= msg.last_name ? msg.last_name : "" %></small>
+                    </div>
+                       </div>
+                    <div class="flex-col" style="align-items: start;margin-top: 1rem;">
+                     <!-- <label for="email">Email Address</label>  -->
+                     <input type="email" class="inputField" id="email" name="email" value="<%= data &&  data.email %>"  placeholder="Enter Your Email ...">
+                     <small class="text-danger my-1 text-start"><%= msg.email ? msg.email : "" %></small>
+                    </div>
+                    <div class="flex-col" style="align-items: start;margin-top: 1rem; position: relative;">
+                        <!-- <label for="phone">Phone</label>  -->
+                        <span style="position: absolute;top: 1.1rem;left: 1rem;">+966 - </span>
+                        <input type="tel" class="inputField" id="phone" name="phone"  value="<%= data &&  data.phone %>" style="width: 98%; padding-left: 4rem;"    placeholder="Enter Your Phone ....">
+                    </div>
+                    <small class="text-danger my-1 text-start"><%= msg.phone ? msg.phone : "" %></small>
+                    <div class="flex-col" style="align-items: start; margin-top: 1rem;">
+         
+                     <!-- <label for="password">Password</label> -->
+                     <input type="password" class="inputField" id="password" name="password"   placeholder="Enter Your Password ..."> 
+                     <small class="text-danger my-1 text-start"><%= msg.password? msg.password : "" %></small>
+                     <small class="text-start mt-2 ms-3" style="font-size: 10px;">
+                        Password Rules
+                        <ul>
+                            <li>Password Must contain 1 capital letter</li>
+                            <li>Password Must contain 1 special character</li>
+                            <li>Password Must contain 1 Number</li>
+                        </ul>
+                     </small>
+
+
+                     </div>
+                     <input type="submit" id="loginButton" style="margin-top: 2rem;" value="Sign Up"> <br>
+                or <br>
+                <a href="/login" id="swithToLogin"  style="margin-top: 1rem;text-decoration: none;">Login</a>
+                    </div>
+          
+            </form>
+    
+    
+        </div>
+    </div>
+
+<%}%>

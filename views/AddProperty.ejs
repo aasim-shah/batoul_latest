@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include("./partials/head.ejs") %>
+    <link rel="stylesheet" type="text/css" href="/css/addproperty-form.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+
+    </head>
+
+    <style>
+        #map {
+            width: 100%;
+            height: 100%;
+        }
+
+        ul {
+            padding: 1rem 2rem;
+        }
+
+        ul li {
+            margin-top: 1rem;
+            list-style: none;
+            font-weight: 500;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        .mapContainer {
+            position: relative;
+            background-color: #fcf4ec;
+            height: 25rem;
+        }
+
+        .closeBtn {
+            position: absolute;
+            right: 1rem;
+            top: 4rem;
+            padding: .5rem;
+            border-radius: 2rem;
+            color: red;
+            border: none;
+            outline: none;
+            background-color: bisque;
+        }
+
+        #suggestionsList {
+            display: none;
+        }
+
+        @media (max-width: 767px) {
+            .imgdiv {
+                width: 24rem;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .imgdiv img {
+                width: 100%;
+                height: 100%;
+            }
+        }
+    </style>
+
+
+    <body>
+
+        
+                <form action="/property/AddProperty" method="post" style="height: 94rem;" enctype="multipart/form-data">
+                  
+                    <fieldset>
+                        <% if(msg.error){ %>
+                            <p class="bg-warning py-3 mb-3 rounded text-center w px-3 " style="font-weight: 500; width: 50%;"><%= msg.error ? msg.error : "" %></p>
+                            <% } %>
+                        <legend>Add Property Form</legend>
+                        <div class="flex-row  justify-content-center" >
+                            <input type="radio" name="rentOrbuy" value="BUY" checked style="display: none;" id="radio1">
+                            <label for="radio1" id="radio1Label" class="btn">BUY</label>
+                            <input type="radio" name="rentOrbuy" value="RENT" style="display: none;" id="radio2">
+                            <label for="radio2" class="btn mx-3" id="radio2Label">RENT</label>
+                            <small class="text-danger my-1 text-start"><%= getFieldError(msg.specificErrors, 'rentOrbuy') %></small>
+
+                        </div>
+
+                        <table class="form-table">
+                            <tr>
+                                <td>
+                                    <label for="propertyType">Property Type:</label>
+                                    <select name="propertyType" id="propertyTypes">
+                                        <option value="villa">Villa</option>
+                                        <option value="apartment">Apartment</option>
+                                        <option value="chalet">Chalet</option>
+                                        <option value="resort">Resort</option>
+                                        <option value="studio">Studio</option>
+                                        <option value="campingSpot">Camping Spot</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <label for="district">District:</label>
+                                    <select name="district" id="district" class="">
+                                        <option value="Al Dar Al Baida">Al Dar Al Baida</option>
+                                        <option value="Al Aziziyah">Al Aziziyah</option>
+                                        <option value="Al Aqiq">Al Aqiq</option>
+                                        <option value="Al Ghadir">Al Ghadir</option>
+                                        <option value="Al Hamra">Al Hamra</option>
+                                        <option value="Al Iskan">Al Iskan</option>
+                                        <option value="Al Malaz">Al Malaz</option>
+                                        <option value="Al Manar">Al Manar</option>
+                                        <option value="Al Murabba">Al Murabba</option>
+                                        <option value="Al Nakhil">Al Nakhil</option>
+                                        <option value="Al Narjis">Al Narjis</option>
+                                        <option value="Al Olaya">Al Olaya</option>
+                                        <option value="Al Qayrawan">Al Qayrawan</option>
+                                        <option value="Al Rabwah">Al Rabwah</option>
+                                        <option value="Al Raid">Al Raid</option>
+                                        <option value="Al Rawdah">Al Rawdah</option>
+                                        <option value="Al Rayyan">Al Rayyan</option>
+                                        <option value="Al Sahafa">Al Sahafa</option>
+                                        <option value="Al Salam">Al Salam</option>
+                                        <option value="Al Sulaimaniyah">Al Sulaimaniyah</option>
+                                        <option value="Al Woroud">Al Woroud</option>
+                                        <option value="Hittin">Hittin</option>
+                                        <option value="Irqah">Irqah</option>
+                                        <option value="Jarir">Jarir</option>
+                                        <option value="Umm Al-Hamam (East)">Umm Al-Hamam (East)</option>
+                                        <option value="Umm Al-Hamam (West)">Umm Al-Hamam (West)</option>
+                                    </select>
+                                    <small class="text-danger my-1 text-start"><%= getFieldError(msg.specificErrors, 'district') %></small>
+                                    
+
+                                </td>
+                                <td>
+                                    <label for="numRooms">Number of Rooms:</label>
+                                    <input type="number" value="<%= data.numRooms %>"  id="numRooms" name="numRooms" min="0">
+                                    <small class="text-danger my-1 text-start"><%= getFieldError(msg.specificErrors, 'numRooms') %></small>
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label for="floorNumber">Floor Number:</label>
+                                    <input type="number" value="<%= data.floorNumber %>"  id="floorNumber" name="floorNumber" min="0">
+                                    <small class="text-danger my-1 text-start"><%= getFieldError(msg.specificErrors, 'floorNumber') %></small>
+
+                                </td>
+                                <td>
+                                    <label for="numberOfFloors">Number of Floors:</label>
+                                    <input type="number" value="<%= data.numberOfFloors %>"  id="numberOfFloors" name="numberOfFloors"  min="0">
+                                    <small class="text-danger my-1 text-start"><%= getFieldError(msg.specificErrors, 'numberOfFloors') %></small>
+
+                                </td>
+                                <td>
+                                    <label for="price">Price:</label>
+                                    <input type="number" value="<%= data.price %>"  id="price" name="price"  min="0">
+                                    <small class="text-danger my-1 text-start"><%= getFieldError(msg.specificErrors, 'price') %></small>
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label for="mainRoad">Main Road:</label>
+                                    <input type="text" value="<%= data.mainRoad %>"  id="mainRoad" name="mainRoad" >
+                                    <small class="text-danger my-1 text-start"><%= getFieldError(msg.specificErrors, 'mainRoad') %></small>
+
+                                </td>
+                                <td>
+                                    <label for="nearbyAmenities">Nearby Amenities:</label>
+                                    <input type="text" value="<%= data.nearbyAmenities %>"  id="nearbyAmenities" name="nearbyAmenities" >
+                                    <small class="text-danger my-1 text-start"><%= getFieldError(msg.specificErrors, 'nearbyAmenities') %></small>
+
+                                </td>
+                                <td>
+                                    <label for="size">Size of Property:</label>
+                                    <input type="number" value="<%= data.size %>"  id="size" name="size" min="0">
+                                    <small class="text-danger my-1 text-start"><%= getFieldError(msg.specificErrors, 'size') %></small>
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">
+                                    <label for="description">Description:</label>
+                                    <textarea id="description"   name="description" rows="4" cols="50"
+                                        ><%= data.description %></textarea>
+                                        <small class="text-danger my-1 text-start"><%= getFieldError(msg.specificErrors, 'description') %></small>
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">
+                                    <div class="flex-col mapContainer">
+                                        <input type="text" id="searchInput" placeholder="Search for a city or location"
+                                            oninput="searchLocation()">
+
+                                        <ul id="suggestionsList"></ul>
+
+                                        <div id="map"></div>
+                                    </div>
+
+                                    <input type="hidden" id="latitude" name="latitude" value="">
+                                    <input type="hidden" id="longitude" name="longitude" value="">
+                                    <input type="hidden" id="city" name="city" value="">
+                                    <input type="hidden" id="country" name="country" value="">
+                                </td>
+                            </tr>
+                        </table>
+
+                        <div class="file-upload-container">
+                            <label class="file-upload-button" for="images">Upload Images</label>
+                            <input type="file" id="images" name="images" multiple required>
+                        </div>
+                        <div id="selected-file-names"></div>
+                    </fieldset>
+
+
+
+
+
+
+
+
+
+                    <input type="submit" value="Add">
+                </form>
+
+
+                <% function getFieldError(errors, field) { %>
+                    <% if (errors && errors.length > 0) { %>
+                        <% const fieldError = errors.find(errorObj => Object.keys(errorObj)[0] === field); %>
+                        <% return fieldError ? fieldError[field] : ''; %>
+                    <% } else { %>
+                        <% return ''; %>
+                    <% } %>
+                <% } %>
+
+                <script>
+                    function updateFileName() {
+                        const fileInput = document.getElementById('id');
+                        const fileNamePlaceholder = document.getElementById('file-name-placeholder');
+
+                        if (fileInput.files.length > 0) {
+                            fileNamePlaceholder.style.display = 'block';
+                            fileNamePlaceholder.textContent = `Selected file: ${fileInput.files[0].name}`;
+                        } else {
+                            fileNamePlaceholder.style.display = 'none';
+                            fileNamePlaceholder.textContent = '';
+                        }
+                    }
+
+
+                    document.getElementById('images').addEventListener('change', function () {
+                        const fileInput = document.getElementById('images');
+                        const selectedFiles = fileInput.files;
+
+                        const selectedFileNames = Array.from(selectedFiles).map((file) => file.name);
+
+                        const selectedFileNamesContainer = document.getElementById('selected-file-names');
+                        selectedFileNamesContainer.innerHTML = selectedFileNames.join(', ');
+                    });
+                </script>
+
+
+
+
+
+
+
+                <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+                <script src="https://api.opencagedata.com/geocode/v1/leaflet.js?key=4026bc360d8d4b2483b8443e2cc206a3"
+                    onload="initMap()"></script>
+                <script>
+                    var map;
+                    var marker;
+
+                    function initMap() {
+                        // Initialize the map
+                        map = L.map('map').setView([0, 0], 2);
+
+                        // Add a tile layer
+                        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                            attribution: '© OpenStreetMap contributors'
+                        }).addTo(map);
+
+                        // Add a marker
+                        marker = L.marker([0, 0], { draggable: true }).addTo(map);
+
+                        // Event listener to update form fields when the marker is moved
+                        marker.on('dragend', function (event) {
+                            var position = marker.getLatLng();
+                            // Update your form fields with the selected location
+                            document.getElementById('latitude').value = position.lat;
+                            document.getElementById('longitude').value = position.lng;
+                        });
+                    }
+
+
+
+                    function searchLocation() {
+                        var searchQuery = document.getElementById('searchInput').value;
+
+                        // Use the OpenCage Geocoding API to get the location coordinates
+                        fetch(`https://api.opencagedata.com/geocode/v1/json?q=${encodeURIComponent(searchQuery)}&key=4026bc360d8d4b2483b8443e2cc206a3`)
+                            .then(response => response.json())
+                            .then(data => {
+                                if (data.results && data.results.length > 0) {
+                                    var locations = data.results.map(result => ({
+                                        name: result.formatted,
+                                        city: result.components.city || result.components.town || result.components.village,
+                                        country: result.components.country,
+                                        lat: result.geometry.lat,
+                                        lng: result.geometry.lng,
+                                    }));
+                                    document.getElementById('suggestionsList').style.display = "flex";
+                                    updateSuggestionsList(locations);
+                                } else {
+                                    console.error('No results found for the search query.');
+                                }
+                            })
+                            .catch(error => {
+                                console.error('Error fetching location data:', error);
+                            });
+                    }
+
+
+
+                    function updateSuggestionsList(locations) {
+                        var suggestionsList = document.getElementById('suggestionsList');
+                        suggestionsList.innerHTML = '';
+                        // Add a close button to the suggestions list
+                        var closeButton = document.createElement('button');
+                        closeButton.classList.add('closeBtn')
+                        closeButton.textContent = 'X';
+                        closeButton.addEventListener('click', function () {
+                            // Hide the suggestions list when the close button is clicked
+                            suggestionsList.style.display = 'none';
+                        });
+                        suggestionsList.appendChild(closeButton);
+
+                        locations.forEach(location => {
+                            var listItem = document.createElement('li');
+                            listItem.textContent = location.name;
+                            listItem.addEventListener('click', function () {
+                                // Update the marker position
+                                marker.setLatLng([location.lat, location.lng]);
+
+                                // Focus and zoom on the clicked location
+                                map.setView([location.lat, location.lng], 12); // Adjust the zoom level as needed
+                                document.getElementById('latitude').value = location.lat;
+                                document.getElementById('longitude').value = location.lng;
+                                document.getElementById('city').value = location.city;
+                                document.getElementById('country').value = location.country;
+
+                                // Hide the suggestions list
+                                suggestionsList.style.display = 'none';
+                            });
+                            suggestionsList.appendChild(listItem);
+                        });
+
+                        // Show the suggestions list
+                        suggestionsList.style.display = 'block';
+                    }
+
+
+
+
+
+
+                    // Call initMap after the OpenCage Geocoding API script has loaded
+                    document.addEventListener('DOMContentLoaded', initMap);
+                </script>
+
+                <%- include("./partials/footer.ejs") %>
+
+    </body>
+
+</html>

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include("./partials/head.ejs") %>
+
+
+    <body>
+
+        <%- include("./partials/header.ejs") %>
+            <%- include("./partials/popup.ejs") %>
+
+                <section class="flex-col" style="justify-content: space-between;">
+                    <div class="banner main-image w-60">
+                        <img src="/uploads/<%= designWork?.workImages[0] %>" id="mainImagePD" alt="Main Image">
+                    </div>
+
+
+                    <div class="img-row flex-row">
+                        <% if(designWork.workImages.length> 0 ){%>
+
+                            <% designWork.workImages.forEach((img , index)=>{ %>
+
+                                <div class="smallimg" onClick="changeImagePD('<%= img %>')">
+                                    <img src="/uploads/<%= img %>" alt="Image" id="thumbnailImage<%= index %>">
+                                </div>
+
+
+                                <%})%>
+                                    <%}%>
+
+                    </div>
+                </section>
+                <section class="flex-row cols2 col-in-mobile">
+                    <div class="dd-left">
+                        <div class="dd-cardd p-4">
+                            </h1>
+                            <p class="d-flex justify-content-between" style="font-weight: 500; margin-bottom: .5rem;">
+                                <span>years of Experience : <%=
+                                    designWork.yearsOfExperience %></span>
+                                    <small class="h3  text-warning" style="font-weight: 800;"><%=   ["*".repeat(designWork.rating)]  %></small>
+                            </p>
+                            <!-- <p style="font-weight: 500; margin-bottom: .5rem;"> : </p> -->
+                            <p> Description : <%= designWork.description %>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="dd-right">
+                        <div class="dd-cardd">
+                            <p class="text-center my-3 h4">Designer Details </p>
+                            <div class="flex-row" style="align-items: center;">
+                                <div class="img-container">
+                                    <img src="https://res.cloudinary.com/dy9crvf1i/image/upload/v1699545067/WhatsApp_Image_2023-11-09_at_6.07.19_PM_v5bspg.jpg"
+                                        alt="user" style="border-radius: 50%;width: 100%;height: 100%;" />
+                                </div>
+                                <div class="d-flex flex-column">
+                                    <p class="username" style="font-size: 1rem; margin-bottom: 0.4rem;">Designer Name :
+                                        <%= user?.fullname %>
+                                    </p>
+                                    <p style="margin: .5rem 0px; "><span>Phone : </span> <small>+966 - <%= user?.phone
+                                                %></small></p>
+                                    <p><span>Email : </span> <small>
+                                            <%= user?.email %>
+                                        </small></p>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </section>
+
+
+                    <div class="d-flex bg-light rounded mx-auto mr-1 mb-5 flex-column" style="width: 70%;" >
+                        <div class="container-fluid">
+                            <p class="h3 mx-3 mt-3 pb-4">Reviews</p>
+    
+                            <% if(reviews.length> 0 ){%>
+    
+                                <% reviews.forEach((review , index)=>{ %>
+    
+                                    <div class="d-flex flex-row mb-2 justify-content-between px-4 ">
+                                        <div class="d-flex flex-row">
+                                            <span class="me-1"><%- index+1 %>.</span>
+                                        <p> <strong><%= review.userId.firstName %> <%= review.userId.lastName %></strong>  :  <%= review.comment %></p>
+                                        </div>
+                                        <div class=" text-warning ml-3 h1"><%-  ["*".repeat(review.ratings)] %></div>
+                                    </div>
+                                <%})%>
+                            <%}%>
+    
+                           
+                        </div>
+                        
+                        <form action="/interiorDesign/addReview/<%= designWork._id %>" method="post"
+                            class="d-flex  mx-auto  flex-column p-4 my-3 rounded ml-auto"
+                            style="width: 90%; background-color: rgb(255, 255, 255);">
+                            <p class="h4 text-center mb-3">Post Your Review </p>
+                            <small style="font-size: 13px;" class="text-danger  mb-3 text-center"><%= error.error ? error.error : "" %></small>
+
+                            <div style="display:flex; justify-content: center;" class="mb-4">
+                                <% let userRating=0 %>
+                                    <% for (let i=1; i <=5; i++) { %>
+                                        <span class="stars<%= (i <= userRating) ? ' selected' : '' %>"
+                                            data-rating="<%= i %>">★</span>
+                                        <% } %>
+                            </div>
+                            <small style="font-size: 13px;" class="text-danger  mb-3 text-center"><%= error.rating ? error.rating : "" %></small>
+
+                            <input type="hidden" name="rating" id="ratingInput" value="<%= userRating %>">
+        
+                            <textarea name="comment" class="rounded  p-2" id="comment" placeholder="Write Your Comment "
+                                rows="4" ></textarea>
+                                <small style="font-size: 13px;" class="text-danger  my-1 text-start"><%= error.comment ? error.comment : "" %></small>
+
+        
+                            <button type="submit" class="btn bisqueBtn mt-3">Submit</button>
+                        </form>
+                    </div>
+                <!-- <section  class="map_container">
+                    <p>Map will be Desplyed here :)</p>
+                </section> -->
+
+
+                <%- include("./partials/footer.ejs") %>
+
+    </body>
+
+</html>

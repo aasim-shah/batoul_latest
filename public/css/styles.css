@@ -1,0 +1,265 @@
+body {
+    background-color: #ffebd6;
+    color: #493a13;
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+main {
+    margin-top: 10rem;
+}
+
+.grid-container {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    flex-direction: row;
+    align-items: center;
+}
+
+.grid-container h1 {
+    font-size: 5rem;
+    width: 40rem;
+    font-weight: bold;
+}
+
+.grid-container img {
+    width: 75rem;
+}
+
+/* Navbar */
+.navbar {
+    background-color: #fcf4ec;
+    border-bottom: 2px solid #ccc;
+}
+
+#logo img {
+    width: 180px;
+    height: auto;
+    margin-left: 20px;
+    margin-right: 80px;
+}
+
+.navbar-nav li a.nav-link {
+    margin-top: 20px;
+    margin-right: 80px;
+    transition: color 0.3s, text-decoration 0.3s, font-weight 0.3s;
+    color: #493a13;
+    border-bottom: 4px solid transparent;
+}
+
+.navbar-nav li a.nav-link:hover {
+    color: #ac8042;
+    font-weight: bold;
+    border-bottom: 4px solid;
+}
+
+.navbar-nav a {
+    font-size: 20px;
+    color: #493a13;
+    font-weight: bold;
+}
+
+/* Buttons */
+#loginButton, #signupButton, #AddWork, #AddProperty , #swithToSignup , #swithToLogin {
+    padding: 10px 30px;
+    border-radius: .6rem;
+    font-size: 20px;
+    margin-right: 20px;
+}
+
+#loginButton {
+    background: #fbeace;
+    border: 2.5px solid #493a13;
+    color: #493a13;
+}
+
+#signupButton , #swithToSignup  , #swithToLogin{
+    background: #493a13;
+    border: 2.5px solid #493a13;
+    color: #fff;
+}
+
+#AddWork, #AddProperty {
+    background: #ffffff94;
+    border: 2.5px solid #493a13;
+    color: #493a13;
+    padding: 10px 20px;
+    border-radius: 10px;
+    margin-left: 80px;
+    font-size: 18px;
+    box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.2);
+}
+
+#loginButton:hover {
+    background: #ddbd90a2;
+}
+
+#signupButton:hover {
+    background: #715920;
+}
+
+#AddWork:hover, #AddProperty:hover {
+    background: #cbad83a2;
+}
+
+/* Footer */
+footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: #fcf4ec;
+    color: #333;
+    text-align: center;
+    border-top: 2px solid #ccc;
+    padding: 10px;
+}
+
+footer span {
+    font-weight: bold;
+}
+
+footer img {
+    width: 23px;
+    vertical-align: middle;
+    margin-left: 2px;
+}
+
+footer a {
+    color: #333;
+    text-decoration: none;
+    margin-left: 2px;
+}
+
+footer a:hover {
+    text-decoration: underline;
+    color: #ac8042;
+}
+
+.flex-row {
+    display: flex;
+    flex-direction: row;
+}
+
+.flex-col {
+    display: flex;
+    flex-direction: column;
+}
+
+.justify-between {
+    justify-content: space-between;
+}
+
+.justify-center {
+    justify-content: center;
+}
+
+.align-center {
+    align-items: center;
+}
+
+.mx-auto {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.mt-1 {
+    margin-top: 1rem;
+}
+
+.mb-1 {
+    margin-bottom: 1rem;
+}
+
+.a-tag {
+    text-decoration: none;
+}
+
+.bg-t {
+    background-color: #0e629a;
+}
+
+.text-t {
+    color: #0e629a;
+}
+
+.btn {
+    padding: .5rem 1.4rem;
+    outline: none;
+    font-weight: 500;
+    text-align: center;
+    border: 2.5px solid #493a13;
+    cursor: pointer;
+    border-radius: .6rem;
+}
+
+.btn:hover{
+    background: #ddbd9069 !important;
+    border: 2.5px solid #493a13;
+    color: black;
+}
+.inputField {
+    border: 1px solid gray;
+    outline: none;
+    padding: .4rem 1rem;
+    border-radius: 8px;
+    margin-top: .5rem;
+    width: 100%;
+}
+.wrap{
+    padding-left: 3rem;
+}
+
+/* Media Queries */
+@media screen and (max-width: 1194px) {
+    .grid-container {
+        flex-direction: column;
+    }
+    #logo img {
+        width: 165px;
+        margin-right: 40px;
+    }
+
+    .navbar-nav li a.nav-link {
+        margin-right: 40px;
+    }
+
+    #loginButton, #signupButton {
+        padding: 8px 25px;
+        margin-top: 15px;
+        margin-right: 20px;
+        margin-bottom: 15px;
+        font-size: 18px;
+    }
+}
+
+/* Media Query for Smaller Screens (767px) */
+@media screen and (max-width: 767px) {
+    .grid-container {
+        display: flex;
+        flex-direction: column;
+        margin-top: 15rem;
+    }
+
+    .grid-container h1 {
+        font-size: 2rem;
+        width: 15rem;
+        margin-left: 0;
+    }
+
+    .grid-container img {
+        width: 24rem;
+        margin-top: 4rem;
+    }
+
+    .popup {
+        width: 99% !important;
+    }
+    .wrap{
+        padding-left: 0px;
+        width: 80%;
+        flex-wrap: wrap;
+    }
+}

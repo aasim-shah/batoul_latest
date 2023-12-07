@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include("./partials/head.ejs") %>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <style>
+        #map {
+            width: 100%;
+            height: 40rem;
+        }
+    </style>
+
+    <body>
+
+        <%- include("./partials/header.ejs") %>
+            <%- include("./partials/popup.ejs") %>
+
+                <section class="flex-col" style="justify-content: space-between;">
+                    <div class="banner main-image w-60">
+                        <img src="/uploads/<%= property.images[0] %>" id="mainImagePD" alt="Main Image">
+                    </div>
+
+                    <div class="img-row flex-row">
+                        <% if(property.images.length> 0 ){%>
+
+                            <% property.images.forEach((img , index)=>{ %>
+
+                                <div class="smallimg" onClick="changeImagePD('<%= img %>')">
+                                    <img src="/uploads/<%= img %>" alt="Image" id="thumbnailImage<%= index %>">
+                                </div>
+
+
+                                <%})%>
+                                    <%}%>
+                    </div>
+                </section>
+                <section class="flex-row cols2 col-in-mobile">
+                    <div class="pleft">
+                        <div class="pcardd">
+                            <% if(property.rentOrbuy){ %>
+                                <span class="right-top bisqueBtn px-3 py-2  rounded-pill"
+                                    style="border: none;font-weight: 500;">
+                                    <%= property.rentOrbuy %>
+                                </span>
+                                <% } %>
+                                    <h1 class="h4 text-center mb-3"> Property Details
+                                    </h1>
+                                    <p class="mt-2">
+                                        <span class="spanTitle">Type : </span>
+                                        <span class="spanText">
+                                            <%= property.type %>
+                                        </span>
+
+                                    </p>
+
+                                    <p class="mt-2">
+                                        <span class="spanTitle">Size : </span>
+                                        <span class="spanText">
+                                            <%= property.size %>
+                                        </span>
+
+                                    </p>
+                                    <p class="mt-2">
+                                        <span class="spanTitle">Number of Rooms : </span>
+                                        <span class="spanText">
+                                            <%= property.rooms %>
+                                        </span>
+
+                                    </p>
+                                    <p class="mt-2">
+                                        <span class="spanTitle">District : </span>
+                                        <span class="spanText">
+                                            <%= property.district %>
+                                        </span>
+
+                                    </p>
+                                    <p class="mt-2">
+                                        <span class="spanTitle">Number of Floors : </span>
+                                        <span class="spanText">
+                                            <%= property.floors %>
+                                        </span>
+
+
+                                    </p>
+                                    <p class="mt-2">
+                                        <span class="spanTitle">Building on Floor Number: </span>
+                                        <span class="spanText">
+                                            <%= property.onFloorNumber %>
+                                        </span>
+
+
+                                    </p>
+                                    <p class="mt-2">
+                                        <span class="spanTitle">City : </span>
+                                        <span class="spanText">
+                                            <%= property.city %>
+                                        </span>
+
+
+                                    </p>
+                                    <p class="mt-2">
+                                        <span class="spanTitle">Price : </span>
+                                        <span class="spanText">
+                                            <strong>
+                                                <%= property.price.toLocaleString('en-IN'); %>
+                                            </strong>
+                                        </span>
+
+                                    </p>
+                                    <p class="mt-2 mb-5">
+                                        <span class="spanTitle">Description : </span>
+                                        <span class="spanText ">
+                                            <%= property.description %>
+                                        </span>
+
+                                    </p>
+                                    <span class="right-bottom bg-white border px-3 py-2  rounded-pill"
+                                        style="border: none;font-weight: 500;">
+                                        <%= property.overallRatings?.toFixed(2) %> <span
+                                                class="text-warning h4">★</span> - <span class="ms-2">(<%=
+                                                    property.reviews.length %>)</span>
+                                    </span>
+                                    <a href="/inpsectionTeam" class="btn btn-warning " style="border: none;">Inspection Team</a>
+
+
+                        </div>
+                    </div>
+                    <div class="pright">
+                        <div class="pcardd">
+                            <p class="username" style="font-size: 1.4rem; margin-bottom:2rem;">Owner Informations
+                            <div class="flex-row">
+                                <div class="img-4rem">
+                                    <img src="https://res.cloudinary.com/dy9crvf1i/image/upload/v1699545067/WhatsApp_Image_2023-11-09_at_6.07.19_PM_v5bspg.jpg"
+                                        alt="user" style="border-radius: 50%;" />
+                                </div>
+                                <div class="">
+                                    <p class="my-1"><span>Name : </span> <small>
+                                        <%= property.userId?.fullname %>
+                                    </small></p>
+                                <p class="my-1"><span>Phone : </span> <small>
+                                        +966 - <%= property.userId?.phone %>
+                                    </small></p>
+                                <p><span>Email : </span> <small>
+                                        <%= property.userId?.email %>
+                                    </small></p>
+                                </div>
+                                </p>
+                            </div>
+                          
+                        </div>
+                    </div>
+                </section>
+                <div class="d-flex flex-row mb-5 justify-content-between ">
+                    <section class="" style="width: 60%;">
+                        <div id="map" ></div>
+                    </section>
+                <div class="d-flex bg-light rounded mr-1 flex-column" style="width: 40%;" >
+                    <div class="container-fluid">
+                        <p class="h3 mx-3 mt-3 pb-4">Reviews</p>
+
+                        <% if(reviews.length> 0 ){%>
+
+                            <% reviews.forEach((review , index)=>{ %>
+
+                                <div class="d-flex flex-row mb-2 justify-content-between px-4 ">
+                                    <div class="d-flex flex-row">
+                                        <span class="me-1"><%- index+1 %>.</span>
+                                    <p> <strong><%= review.userId.firstName %> <%= review.userId.lastName %></strong>  :  <%= review.comment %></p>
+                                    </div>
+                                    <div class=" text-warning ml-3 h1"><%-  ["*".repeat(review.ratings)] %></div>
+                                </div>
+                            <%})%>
+                        <%}%>
+
+                       
+                    </div>
+                    <form action="/property/addReview/<%= property._id %>" method="post"
+                        class="d-flex  mx-auto  flex-column p-4 my-3 rounded ml-auto"
+                        style="width: 90%; background-color: rgb(255, 255, 255);">
+                        <p class="h4 text-center mb-3">Post Your Review </p>
+                        <small style="font-size: 13px;" class="text-danger  mb-3 text-center"><%= error.error ? error.error : "" %></small>
+
+                        <div style="display:flex;  justify-content: center;" class="mb-4">
+                            <% let userRating=0 %>
+                                <% for (let i=1; i <=5; i++) { %>
+                                    <span class="stars<%= (i <= userRating) ? ' selected' : '' %>"
+                                        data-rating="<%= i %>">★</span>
+                                    <% } %>
+                                </div>
+                                <small style="font-size: 13px;" class="text-danger  mb-3 text-center"><%= error.rating ? error.rating : "" %></small>
+                        <input type="hidden" name="rating" id="ratingInput" value="<%= userRating %>">
+    
+                        <textarea name="comment" class="rounded  p-2" id="comment" placeholder="Write Your Comment "
+                            rows="4" ></textarea>
+                            <small style="font-size: 13px;" class="text-danger  my-1 text-start"><%= error.comment ? error.comment : "" %></small>
+    
+    
+                        <button type="submit" class="btn bisqueBtn mt-3">Submit</button>
+                    </form>
+                </div>
+            </div>
+
+
+
+                <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+                <script src="https://api.opencagedata.com/geocode/v1/leaflet.js?key=4026bc360d8d4b2483b8443e2cc206a3"
+                    onload="initMap()"></script>
+                <script>
+                    var map;
+                    var marker;
+                    const latitude = "<%= property.latitude %>"
+                    const longitude = "<%= property.longitude %>"
+                    console.log({ latitude })
+                    console.log({ longitude })
+                    function initMap() {
+                        // Initialize the map
+                        map = L.map('map').setView([0, 0], 2);
+
+                        // Add a tile layer
+                        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                            attribution: '© OpenStreetMap contributors'
+                        }).addTo(map);
+
+                        // Add a marker
+                        marker = L.marker([0, 0], { draggable: false }).addTo(map);
+
+
+                        marker.setLatLng([latitude, longitude]);
+
+                        // Focus and zoom on the clicked location
+                        map.setView([latitude, longitude], 14); // Adjust the zoom level as needed
+                    }
+                    document.addEventListener('DOMContentLoaded', initMap);
+
+                </script>
+
+
+                <%- include("./partials/footer.ejs") %>
+
+    </body>
+
+</html>

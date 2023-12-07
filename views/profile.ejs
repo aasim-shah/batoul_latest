@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<title>Profile</title>
+<%- include("./partials/head.ejs") %>
+
+    <body>
+
+        <%- include("./partials/header.ejs") %>
+            <%- include("./partials/popup.ejs") %>
+
+                <section class="flex-row col-in-mobile" style="justify-content: space-between;margin-bottom: 3rem;">
+                    <div class="left" style="background-color: #fcf4ec;">
+                        <div class="img-30rem" style="position: relative;">
+                            <button onclick="openEditPopup()" class="rt p-2 bg-warning " style="width: 2.5rem;"> <img
+                                    src="https://img.icons8.com/ios/50/edit.png" alt="edit" /></button>
+                            <img src="https://res.cloudinary.com/dy9crvf1i/image/upload/v1699545067/WhatsApp_Image_2023-11-09_at_6.07.19_PM_v5bspg.jpg"
+                                alt="user" style="border-radius: 50%;" />
+                        </div>
+                        <p class="username mb-3 h3">
+                            <%= user.firstName %> 
+                            <span class="ml-1"> <%= user.lastName %> </span>
+                        </p>
+                        <p class="mb-2 h5"><span>Phone : </span> <small> +966-<%= user.phone %></small></p>
+                        <p class="h5"><span>Email : </span> <small>
+                                <%= user.email %>
+                            </small></p>
+                        <a href="/logout" class="btn btn-danger h4 mt-3">Logout</a>
+
+                        <!-- popup code for edit user modal  -->
+                        <div id="editPopup" style="display: none; top: 27rem;">
+                            <p style="font-size: 13px;" class=" text-danger mb-4  alert-warning text-center rouneded" id="msgError"></p>
+                            <!-- <label for="editName">Name:</label>
+                            <input type="text" class="form-control" id="editName" value="<%= user.fullname %>"> -->
+                            <div class="flex-row mb-3" style="align-items: start;gap: 1rem;">
+                              <div class="d-flex flex-column">
+                                <label for="firstNamee">First Name</label> 
+                                <input type="text" class="inputField" id="firstNamee" value="<%= user.firstName %>" name="first_name"  placeholder=" First Name ...">
+                                
+                              </div>
+                              <div class="d-flex flex-column">
+                                <label for="lastNamee">Last Name</label> 
+                                <input type="text" class="inputField"  value="<%= user.lastName %>" id="lastNamee" name="last_name"  placeholder="Last Name ...">
+                              </div>
+                               </div>
+
+                            <label for="editEmail">Email:</label>
+                            <input type="text" readonly class="form-control" id="editEmail"
+                                value="<%= user.email %>"><br>
+
+                            <label for="editPhone">Phone:</label>
+                            <input type="number" id="editPhone" class="form-control" value="<%= user.phone %>"><br>
+                            <label for="old_password">Old Password:</label>
+                            <input type="password" placeholder="Enter Your Old Password ..." id="old_password" class="form-control" ><br>
+                            <label for="new_password">New Password:</label>
+                            <input type="password" placeholder="Enter New Password" id="new_password" class="form-control"><br>
+                            <small class="text-start " style="font-size: 10px;">
+                                Password Rules
+                                <ul class="ms-2">
+                                    <li>Password Must contain 1 capital letter</li>
+                                    <li>Password Must contain 1 special character</li>
+                                    <li>Password Must contain 1 Number</li>
+                                </ul>
+                             </small>
+
+                            <div class="d-flex justify-content-end">
+                                <div class="d-flex justify-content-end">
+                                    <button onclick="updateUser()" class="btn btn-success rounded" style="background-color: #69402b; color: white; border: 2px solid #69402b;">Update</button>
+                                    <button onclick="closeEditPopup()" class="btn btn-warning rounded" style="background-color: bisque; color: #69402b; border: 2px solid #69402b;">Cancel</button>
+                                </div>
+                                
+                            </div>
+                        </div>
+                        <!-- popup code for edit user modal  -->
+
+
+
+                    </div>
+                    <div class="mx-auto " style="width: 65%; ">
+                        <p class="h3 mx-4">MY Properties </p>
+
+                        <div class="right gap-4">
+
+                            <% if(allProperties.length> 0) { %>
+                                <% allProperties.forEach((property , index)=> { %>
+
+
+                                    <div class="cardd">
+                                        <a href="/property/EditProperty/<%= property._id %>" class="editBtn">
+                                            <img width="20" height="20" src="https://img.icons8.com/ios/50/edit.png"
+                                                alt="edit" />
+                                        </a>
+                                        <div class="img-containerr">
+                                            <img src="/uploads/<%= property.images[0] %>" alt="Image">
+                                        </div>
+                                        <div class="px-2 mt-3">
+                                            <h3>
+                                                <%= property.size %> sq-feet <%= property.type %>
+                                            </h3>
+                                            <p>Price . <%= property.price %>
+                                            </p>
+                                        </div>
+                                    </div>
+
+
+                                    <% }) %>
+                                        <% } %>
+
+
+                        </div>
+                        <p class="h3 mx-4">MY Works </p>
+
+                        <div class="right gap-4">
+
+                            <% if(works.length> 0) { %>
+                                <% works.forEach((work , index)=> { %>
+
+
+                                    <div class="cardd">
+                                        <a href="/interiorDesign/edit/<%= work._id %>" class="editBtn">
+                                            <img width="20" height="20" src="https://img.icons8.com/ios/50/edit.png"
+                                                alt="edit" />
+                                        </a>
+                                        <div class="img-containerr">
+                                            <img src="/uploads/<%= work.workImages[0] %>" alt="Image">
+                                        </div>
+                                        <div class="px-2 mt-3">
+                                            <h3>
+                                                Experience : <%= work.yearsOfExperience %>
+                                            </h3>
+                                            <h3>
+                                                Desc : <%= work.description.slice(0,40) %>
+                                                    </p>
+                                            </h3>
+                                        </div>
+                                    </div>
+
+
+                                    <% }) %>
+                                        <% } %>
+
+
+                        </div>
+                        <p class="h3 mx-4">Wish List - Properties </p>
+                        <div class="right gap-4">
+
+                            <% if(user.wishList.length> 0) { %>
+                                <% user.wishList.forEach((property , index)=> { %>
+
+
+                                    <div class="cardd">
+                                        <a href="/property/removeFromWishlist/<%= property._id %>" style="background-color: rgb(175, 12, 12);color: white;" class="editBtn"> 
+                                            <img width="20" height="20" src="https://img.icons8.com/ios-glyphs/30/FFFFFF/filled-trash.png" alt="filled-trash"/></a>
+                                        <div class="img-containerr">
+                                            <a href="/property/propertyDetails/<%= property._id %>">
+                                                <img src="/uploads/<%= property.images[0] %>"  alt="Image">
+                                            </a>
+                                        </div>
+                                        <div class="px-2 mt-3">
+                                            <h3>
+                                                <%= property.size %> sq-feet <%= property.type %>
+                                            </h3>
+                                            <p>Price . <%= property.price %>
+                                            </p>
+                                        </div>
+                                    </div>
+
+
+                                    <% }) %>
+                                        <% } %>
+
+
+                        </div>
+
+
+                        <p class="h3 mx-4">Wish List - Designs </p>
+                        <div class="right gap-4">
+
+                            <% if(user.wishList_interiorDesigns.length> 0) { %>
+                                <% user.wishList_interiorDesigns.forEach((design , index)=> { %>
+
+
+                                    <div class="cardd">
+                                        <a href="/interiorDesign/removeFromWishlist/<%= design._id %>" style="background-color: rgb(175, 12, 12);color: white;" class="editBtn"> 
+                                            <img width="20" height="20" src="https://img.icons8.com/ios-glyphs/30/FFFFFF/filled-trash.png" alt="filled-trash"/></a>
+                                        <div class="img-containerr">
+                                            <a href="/interiorDesign/designDetails/<%= design._id %>">
+                                            <img src="/uploads/<%= design.workImages[0] %>"  alt="Image">
+                                        </a>
+                                        </div>
+                                        <div class="px-2 mt-3">
+                                           
+                                            <p>Description . <%= design.description %>
+                                            </p>
+                                        </div>
+                                    </div>
+
+
+                                    <% }) %>
+                                        <% } %>
+
+
+                        </div>
+                    </div>
+
+                </section>
+
+
+
+
+
+
+                <%- include("./partials/footer.ejs") %>
+
+
+    </body>
+
+</html>

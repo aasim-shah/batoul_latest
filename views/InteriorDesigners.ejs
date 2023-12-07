@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include("./partials/head.ejs") %>
+
+
+    <body>
+        <%- include("./partials/header.ejs") %>
+            <%- include("./partials/popup.ejs") %>
+
+            <div class="flex-row w-90 items-center  mx-auto justify-between">
+                <a href="/interiorDesign/AddWork"  class="btn bisqueBtn" >
+                        Add Work
+                    </a>
+                    <button class=" btn filterBtn"
+                    onclick="toggleSidebarDesigners()">
+                    <img width="20" height="20" src="https://img.icons8.com/ios-filled/50/filter--v1.png" alt="filter--v1"/>
+
+                </button>
+
+                </div>
+                    <div class="container">
+                        <% if(designWorks.length> 0) { %>
+                            <% designWorks.forEach((workDesign , index)=>{ %>
+                                <div class="card">
+                                    <a class="right-top bisqueBtn p-2 " style="border-radius: 2rem; border: none;"
+                                    href="/interiorDesign/add_to_wishlist/<%= workDesign._id %>">
+                                    <% if (user && user.wishList_interiorDesigns && user.wishList_interiorDesigns.map(String).includes(String(workDesign._id))) { %>
+                                        <img width="30" height="30" src="https://img.icons8.com/fluency/48/like.png"
+                                        alt="like" />
+                                       
+                                        <% } else { %>
+                                            <img width="30" height="30" src="https://img.icons8.com/ios/50/like--v1.png"
+                                            alt="like--v1" />
+                                            <% } %>
+
+                                </a>
+                                    <a href="/interiorDesign/designDetails/<%= workDesign._id %>" class="img-a">
+                                        <img src="/uploads/<%= workDesign.workImages[0] %>" alt="Avatar"
+                                            style="width:100%; height: 100%; "></a>
+                                    <a href="/interiorDesign/designDetails/<%= workDesign._id %>"
+                                        style="text-decoration: none;color: black;">
+                                        <h3 class="text-center " style="padding-left: 1rem;">
+                                            <span >Years of Experience</span>
+                                            <span><%= workDesign.yearsOfExperience %></span>
+                                        </h3>
+                                    </a>
+                                    <p class="text-center">Description . <%= workDesign.description.slice(0, 60) %>
+                                    </p>
+                                </div>
+                                <% }) %>
+                                    <% } %>
+                    </div>
+
+
+                    <div id="mySidebarDesigners" class="interiorSidebar">
+                        <a href="javascript:void(0)" class="closebtn" onclick="toggleSidebarDesigners()">×</a>
+                        <form action="/interiorDesign/filterDesignWorks" method="post">
+    
+                            <div class="flex-col mx-auto w-90" >
+                                <label for="experience"  class=" text-yellow mb-2">years of Experience</label>
+                                <select name="experience" id="experience" class="inputField">
+                                    <option value="1"> 1 Year </option>
+                                    <option value="2"> 2 Years</option>
+                                    <option value="3"> 3 Years</option>
+                                    <option value="4"> 4 Years</option>
+                                    <option value="5"> 5 Years</option>
+                                    <option value="6"> More than 5 Years </option>
+                                </select>
+                            </div>
+
+                            <div class="flex-col w-90 mx-auto mt-2" >
+
+                            <label for="ratings" class="text-yellow mb-2" >Designer Ratings</label>
+                            <div style="display:flex; justify-content: center;">
+                                <% let userRating = 0 %>
+                                <% for (let i = 1; i <= 5; i++) { %>
+                                  <span class="stars<%= (i <= userRating) ? ' selected' : '' %>" data-rating="<%= i %>">★</span>
+                                <% } %>
+                              </div>
+                              <input type="hidden" name="rating" id="ratingInput" value="<%= userRating %>">
+                            </div>
+
+                           <div class="flex-row" style="justify-content: center; margin-top: 2rem;">
+                            <button type="submit" class="btn mx-auto w-90"
+                            style="background-color: #fbeace; ">Apply Filter</button>
+                           </div>
+                        </form>
+                    </div>
+
+
+
+
+                    <%- include("./partials/footer.ejs") %>
+
+    </body>
+
+</html>

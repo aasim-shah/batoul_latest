@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include("./partials/head.ejs") %>
+    <link rel="stylesheet" type="text/css" href="/css/addproperty-form.css">
+    </head>
+
+ 
+
+
+    <body>
+
+        <%- include("./partials/header.ejs") %>
+            <%- include("./partials/popup.ejs") %>
+
+
+
+                        <form action="/property/editProperty" method="post" style="height: 175vh;" enctype="multipart/form-data">
+                            <fieldset>
+                                <legend>Edit Property Form</legend>
+                                <div class="flex-row  justify-content-center" >
+                                    <input type="radio"  <%= property.rentOrbuy === 'BUY' ? 'checked' : '' %> name="rentOrbuy" value="BUY"  style="display: none;" id="radio1">
+                                    <label for="radio1" id="radio1Label" class="btn">BUY</label>
+                                    <input type="radio" name="rentOrbuy" value="RENT" style="display: none;" id="radio2" <%= property.rentOrbuy === 'RENT' ? 'checked' : '' %>>
+                                    <label for="radio2" class="btn mx-3" id="radio2Label">RENT</label>
+                                </div>
+        
+                                <table class="form-table">
+                                    <tr>
+                                        <td>
+                                            <label for="propertyType">Property Type:</label>
+                                            <select name="propertyType" id="propertyTypes">
+                                                <option value="villa" <%= property.type === 'villa' ? 'selected' : '' %>>Villa</option>
+                                                <option value="apartment" <%= property.type === 'apartment' ? 'selected' : '' %>>Apartment</option>
+                                                <option value="chalet" <%= property.type === 'chalet' ? 'selected' : '' %>>Chalet</option>
+                                                <option value="resort" <%= property.type === 'resort' ? 'selected' : '' %>>Resort</option>
+                                                <option value="studio" <%= property.type === 'studio' ? 'selected' : '' %>>Studio</option>
+                                                <option value="campingSpot" <%= property.type === 'campingSpot' ? 'selected' : '' %>>Camping Spot</option>
+                                            </select>
+                                            
+                                        </td>
+
+                                        <td>
+                                            <label for="district">District:</label>
+                                            <input type="text" id="district" name="district" value="<%= property.district %>" required>
+                                        </td>
+                                        <td>
+                                            <label for="numRooms">Number of Rooms:</label>
+                                            <input type="number" id="numRooms" name="numRooms" value="<%= property.rooms %>"  required min="0">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <label for="floorNumber">Floor Number:</label>
+                                            <input type="number" id="floorNumber" name="floorNumber" value="<%= property.onFloorNumber %>"  required min="0">
+                                        </td>
+                                        <td>
+                                            <label for="numberOfFloors">Number of Floors:</label>
+                                            <input type="number" id="numberOfFloors" name="numberOfFloors" value="<%= property.floors %>"  required
+                                                min="0">
+                                        </td>
+                                        <td>
+                                            <label for="price">Price:</label>
+                                            <input type="number" id="price" name="price" value="<%= property.price %>"  required min="0">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <label for="mainRoad">Main Road:</label>
+                                            <input type="text" id="mainRoad" value="<%= property.mainRoad %>"  name="mainRoad" required>
+                                        </td>
+                                        <td>
+                                            <label for="nearbyAmenities">Nearby Amenities:</label>
+                                            <input type="text" id="nearbyAmenities" value="<%= property.nearbyAmenties %>" name="nearbyAmenities" required>
+                                        </td> 
+                                        <td>
+                                            <label for="size">Size of Property:</label>
+                                            <input type="number" id="size" name="size" value="<%= property.size %>" required min="0">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3">
+                                            <label for="description">Description:</label>
+                                            <textarea id="description" name="description" "  cols="50"
+                                                required><%= property.description %></textarea>
+                                        </td>
+                                    </tr>
+                                </table>
+
+                                <input type="hidden" name="property_id" value="<%= property._id %>" id="">
+                                <div class="img-row flex-row">
+                                    <% if(property.images.length > 0 ){%>
+               
+                                        <% property.images.forEach((img , index) =>{ %>
+            
+                                            <div class="smallimg"  onclick="changeImage('<%= img %>')">
+                                                <img src="/uploads/<%= img %>" alt="Image"  id="thumbnailImage<%= index %>">
+                                            </div>
+                                           
+            
+                                        <%})%>
+                                        <%}%>
+                                </div>
+
+
+                                <div class="file-upload-container">
+                                    <label class="file-upload-button" for="images">Upload Images</label>
+                                    <input type="file" id="images" name="images" multiple >
+                                </div>
+                                <div id="selected-file-names"></div>
+                            </fieldset>
+
+                           <div class="d-flex flex-row" >
+                            <a  href="/property/delete/<%= property._id %>" style="margin-top: 1.8rem; margin-right: 1rem;" class="btn  btn-danger"> Delete</a>
+                            <input type="submit" value="Update">
+                           </div>
+                        </form>
+                        
+
+
+
+
+
+
+
+                                        <script>
+                                            function updateFileName() {
+                                                const fileInput = document.getElementById('id');
+                                                const fileNamePlaceholder = document.getElementById('file-name-placeholder');
+
+                                                if (fileInput.files.length > 0) {
+                                                    fileNamePlaceholder.style.display = 'block';
+                                                    fileNamePlaceholder.textContent = `Selected file: ${fileInput.files[0].name}`;
+                                                } else {
+                                                    fileNamePlaceholder.style.display = 'none';
+                                                    fileNamePlaceholder.textContent = '';
+                                                }
+                                            }
+
+
+                                            document.getElementById('images').addEventListener('change', function () {
+                                                const fileInput = document.getElementById('images');
+                                                const selectedFiles = fileInput.files;
+
+                                                const selectedFileNames = Array.from(selectedFiles).map((file) => file.name);
+
+                                                const selectedFileNamesContainer = document.getElementById('selected-file-names');
+                                                selectedFileNamesContainer.innerHTML = selectedFileNames.join(', ');
+                                            });
+                                        </script>
+
+                                        <%- include("./partials/footer.ejs") %>
+
+    </body>
+
+</html>

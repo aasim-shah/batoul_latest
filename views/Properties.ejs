@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include("./partials/head.ejs") %>
+
+    <body>
+        <%- include("./partials/header.ejs") %>
+            <%- include("./partials/popup.ejs") %>
+
+                <div class="flex-row w-90 items-center  mx-auto justify-between">
+                    <a href="/property/AddProperty" class="btn bisqueBtn">
+                        Add Property
+                    </a>
+                    <button class="btn filterBtn" onclick="toggleSidebarProperty()">
+                        <img width="20" height="20" src="https://img.icons8.com/ios-filled/50/filter--v1.png"
+                            alt="filter--v1" />
+
+                    </button>
+
+
+                </div>
+
+                <div class="container" >
+                    <% if(allProperties.length> 0) { %>
+                        <% allProperties.forEach((property , index)=>{ %>
+                            <div class="card">
+                                <a class="right-top bisqueBtn p-2 " style="border-radius: 2rem; border: none;"
+                                    href="/property/add_to_wishlist/<%= property._id %>">
+                                    <% if (user && user.wishList && user.wishList.map(String).includes(String(property._id))) { %>
+                                        <img width="30" height="30" src="https://img.icons8.com/fluency/48/like.png"
+                                        alt="like" />
+                                       
+                                        <% } else { %>
+                                            <img width="30" height="30" src="https://img.icons8.com/ios/50/like--v1.png"
+                                            alt="like--v1" />
+                                            <% } %>
+
+                                </a>
+                                <a href="/property/propertyDetails/<%= property._id %>" class="img-a">
+                                    <img src="/uploads/<%= property.images[0] %>" alt="Avatar"
+                                        style="width:100%; height: 100%; "></a>
+                                <a href="/property/propertyDetails/<%= property._id %>"
+                                    style="text-decoration: none;color: black;">
+                                    <h3>
+                                        <%= property.size %> sq-feet <%= property.type %>
+                                    </h3>
+
+                                    <p class="mt-0 mb-0">
+                                        <% if(property.district && property.district !== "undefined"){ %>
+                                         <span>
+                                             District :  <%= property.district %>
+                                         </span> 
+                                         <%}%>
+ 
+                                     </p>
+
+                                    <p class="mt-0 mb-0" >
+                                       <% if(property.city && property.city !== "undefined"){ %>
+                                        <span>
+                                            <%= property.city %>
+                                        </span> -
+                                        <%}%>
+                                        <% if(property.country && property.country !== "undefined"){ %>
+                                            <span>
+                                            <%= property.country %>
+                                        </span>
+                                        <%}%>
+
+                                    </p>
+                                    <p class=" mt-0 mb-0">
+                                       <% if(property.rentOrbuy && property.rentOrbuy !== "undefined"){ %>
+                                        <span>
+                                            Type :  <%= property.rentOrbuy %>
+                                        </span> 
+                                        <%}%>
+
+                                    </p>
+                                   
+                                    <span>Price .  <%= property.price.toLocaleString();  %>
+                                    </span>
+                                </a>
+                            </div>
+                            <% }) %>
+                                <% } %>
+                </div>
+
+
+                <div id="mySidebarProperty" class="propertiesSidebar">
+                    <a href="javascript:void(0)" class="closebtn" onclick="toggleSidebarProperty()">×</a>
+                    <form action="/property/filteredProperties" method="post">
+
+                        <div class="flex-col">
+                            <div class="flex-row mb-3 justify-arround">
+                                <input type="radio" name="rentOrbuy" value="BUY" style="display: none;" id="radio1">
+                                <label for="radio1" id="radio1Label" class="btn">BUY</label>
+                                <input type="radio" name="rentOrbuy" value="RENT" style="display: none;" id="radio2">
+                                <label for="radio2" class="btn" id="radio2Label">RENT</label>
+                            </div>
+                            <div class="flex-col w-90 mx-auto">
+                                <label for="location" class="text-yellow mb-2">Location</label>
+                                <select name="location" id="location" class="inputField">
+                                    <option value="Al Dar Al Baida">Al Dar Al Baida</option>
+                                    <option value="Al Aziziyah">Al Aziziyah</option>
+                                    <option value="Al Aqiq">Al Aqiq</option>
+                                    <option value="Al Ghadir">Al Ghadir</option>
+                                    <option value="Al Hamra">Al Hamra</option>
+                                    <option value="Al Iskan">Al Iskan</option>
+                                    <option value="Al Malaz">Al Malaz</option>
+                                    <option value="Al Manar">Al Manar</option>
+                                    <option value="Al Murabba">Al Murabba</option>
+                                    <option value="Al Nakhil">Al Nakhil</option>
+                                    <option value="Al Narjis">Al Narjis</option>
+                                    <option value="Al Olaya">Al Olaya</option>
+                                    <option value="Al Qayrawan">Al Qayrawan</option>
+                                    <option value="Al Rabwah">Al Rabwah</option>
+                                    <option value="Al Raid">Al Raid</option>
+                                    <option value="Al Rawdah">Al Rawdah</option>
+                                    <option value="Al Rayyan">Al Rayyan</option>
+                                    <option value="Al Sahafa">Al Sahafa</option>
+                                    <option value="Al Salam">Al Salam</option>
+                                    <option value="Al Sulaimaniyah">Al Sulaimaniyah</option>
+                                    <option value="Al Woroud">Al Woroud</option>
+                                    <option value="Hittin">Hittin</option>
+                                    <option value="Irqah">Irqah</option>
+                                    <option value="Jarir">Jarir</option>
+                                    <option value="Umm Al-Hamam (East)">Umm Al-Hamam (East)</option>
+                                    <option value="Umm Al-Hamam (West)">Umm Al-Hamam (West)</option>
+                                </select>
+                            </div>
+                            <p class="text-yellow mt-3 w-90 mx-auto">Select Price Range </p>
+
+                            <div class="flex-row text-dark w-90 mt-2 mx-auto justify-between">
+
+                                <div class="flex-col" style="width: 45%;">
+                                    <label for="priceRange" style="margin-bottom: .4rem;">From . <span
+                                            id="priceValue">0</span></label>
+                                    <input type="range" id="priceRange" name="priceRangeFrom" min="0" max="99999"
+                                        step="100" oninput="updatePriceValue()">
+                                </div>
+                                <div class="flex-col" style="width: 45%;">
+                                    <label for="priceRange" style="margin-bottom: .4rem;">To . <span
+                                            id="priceToValue">0</span></label>
+                                    <input type="range" id="priceToRange" name="priceRangeTo" min="5000" max="99999999999"
+                                        step="500" oninput="updatePriceToValue()">
+                                </div>
+                            </div>
+                            <p class="text-yellow m-3">Type </p>
+                            <div class="flex-row justify-arround mb-3" style="flex-wrap: wrap;gap:.5rem">
+                                <label for="villa" class="btn" id="villaLabel">Villa</label>
+                                <input type="checkbox" name="type" style="display: none;" value="villa" id="villa"
+                                    onchange="toggleLabelColor('villa')">
+
+                                <label for="apartment" class="btn" id="apartmentLabel">Appartment</label>
+                                <input type="checkbox" name="type" style="display: none;" value="apartment"
+                                    id="apartment" onchange="toggleLabelColor('apartment')">
+
+                                <label for="chalet" class="btn" id="chaletLabel">Chalet</label>
+                                <input type="checkbox" name="type" style="display: none;" value="chalet" id="chalet"
+                                    onchange="toggleLabelColor('chalet')">
+
+                                <label for="resort" class="btn" id="resortLabel">Resort</label>
+                                <input type="checkbox" name="type" style="display: none;" value="resort" id="resort"
+                                    onchange="toggleLabelColor('resort')">
+
+                                <label for="studio" class="btn" id="studioLabel">Studio</label>
+                                <input type="checkbox" name="type" style="display: none;" value="studio" id="studio"
+                                    onchange="toggleLabelColor('studio')">
+
+                                <label for="campingSpot" class="btn" id="campingSpotLabel">Camping Spot</label>
+                                <input type="checkbox" name="type" style="display: none;" value="campingSpot"
+                                    id="campingSpot" onchange="toggleLabelColor('campingSpot')">
+
+                            </div>
+                            <p class="text-yellow m-3">Rating </p>
+                            <div style="display:flex; justify-content: center;">
+                                <% let userRating=0 %>
+                                    <% for (let i=1; i <=5; i++) { %>
+                                        <span class="stars<%= (i <= userRating) ? ' selected' : '' %>"
+                                            data-rating="<%= i %>">★</span>
+                                        <% } %>
+                            </div>
+                            <input type="hidden" name="rating" id="ratingInput" value="<%= userRating %>">
+
+                            <button class="btn mx-auto w-90 mt-3" style="background-color: #fbeace;">Apply</button>
+                        </div>
+                    </form>
+                </div>
+
+
+
+                <%- include("./partials/footer.ejs") %>
+
+    </body>
+
+</html>

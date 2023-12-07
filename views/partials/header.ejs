@@ -1,0 +1,42 @@
+<header>
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <a class="navbar-brand" href="/">
+            <div id="logo"><img src="/images/logo.png" alt="Logo"></div>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="collapsibleNavbar" style="padding-left: 2rem;"> 
+            <ul class="navbar-nav mx-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/property/all">Properties</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/interiorDesign">Interior Designers</a>
+                </li>
+            </ul>
+
+            <ul class="navbar-nav ml-auto" style="margin-top: 1rem;">
+                <% if (user) { %>
+                    <li class="nav-item">
+                        <a class="btn" style="margin-right: 1rem; background-color: bisque;padding: .2rem 1.3rem;" href="/profile">Profile </a>
+                    </li>
+
+                    <%}else{%>
+                        <li class="nav-item">
+                            <button id="loginButton" >Log in</button>
+                        </li>
+                        <li class="nav-item">
+                            <button id="signupButton">Sign up</button>
+                        </li>
+                        <%}%>
+            </ul>
+        </div>
+    </nav>
+    <hr>
+</header>
+
+<main>

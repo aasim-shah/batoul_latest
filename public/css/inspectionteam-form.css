@@ -1,0 +1,76 @@
+/* Reset default styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+}
+
+fieldset {
+    border: 4px solid #4e2b0ad4;
+    padding: 30px;
+    border-radius: 15px;
+    width: 70%;
+    margin: 0 auto;
+
+    /* Responsive styles for tablets */
+    @media (max-width: 768px) {
+        width: 80%;
+    }
+
+    /* Responsive styles for phones */
+    @media (max-width: 480px) {
+        width: 90%;
+    }
+}
+
+
+/* Styles for form elements */
+legend {
+    font-weight: bold;
+    text-align: center;
+    width: 100%;
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
+label {
+    font-weight: bold;
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+input[type="text"],
+input[type="email"],
+textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    font-size: 18px; 
+}
+
+#submit {
+    font-weight: bold;
+    background: #ffffff94;
+    border: 2px solid #493a13;
+    color: #493a13;
+    padding: 15px 40px; 
+    border-radius: 10px;
+    margin: 20px auto; 
+    display: block; 
+    font-size: 18px; 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.33);
+    cursor: pointer; 
+}
+
+#submit:hover {
+    background-color: #cbad83a2;
+}
+
