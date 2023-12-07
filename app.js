@@ -43,7 +43,7 @@ app.use(session({
 
 // mongodb connection
 // mongoose.connect('mongodb://0.0.0.0:27017/Homekey', {
-  mongoose.connect('mongodb+srv://Haifa:Homekey@web.g9ukbvh.mongodb.net/Homekey?retryWrites=true&w=majority', {
+  mongoose.connect('mongodb+srv://Haifa:Homekey@web.g9ukbvh.mongodb.net/Homekeyy?retryWrites=true&w=majority', {
 
   useNewUrlParser: true,
   useUnifiedTopology: true,
