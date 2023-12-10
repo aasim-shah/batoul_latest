@@ -66,7 +66,7 @@
 
     <body>
 
-        
+        <%- include("./partials/header.ejs") %>
                 <form action="/property/AddProperty" method="post" style="height: 94rem;" enctype="multipart/form-data">
                   
                     <fieldset>
@@ -344,7 +344,7 @@
                                 marker.setLatLng([location.lat, location.lng]);
 
                                 // Focus and zoom on the clicked location
-                                map.setView([location.lat, location.lng], 12); // Adjust the zoom level as needed
+                                map.setView([location.lat, location.lng], 12);
                                 document.getElementById('latitude').value = location.lat;
                                 document.getElementById('longitude').value = location.lng;
                                 document.getElementById('city').value = location.city;

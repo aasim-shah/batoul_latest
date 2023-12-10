@@ -97,11 +97,6 @@ propertyControler.post_add_property = async (req, res) => {
         country, } = req.body
     const imgsArray = []
 
-
-    // if (district === "" || numRooms === "" ||  floorNumber === "" || numberOfFloors === "" || price === "" || mainRoad === "" || nearbyAmenities === ""  ||  size === "" || description === "") {
-    //     return res.render('AddProperty', { msg : {district : "District is a required Field !", error : "All fields are required !"  , password : null} , data : req.body });
-
-    //    }
     const fieldsToCheck = {
         district: null,
         numRooms: null,
@@ -117,6 +112,7 @@ propertyControler.post_add_property = async (req, res) => {
 
     console.log(req.body)
     const errors = [];
+
     // Function to add an error for a specific field
     const addError = (field, message) => {
         errors.push({ [field]: message });
@@ -133,7 +129,6 @@ propertyControler.post_add_property = async (req, res) => {
     console.log({ errors })
     if (errors.length > 0) {
         return res.render('AddProperty', {
-            // return res.json({
             msg: {
                 error: 'All fields are required!',
                 specificErrors : errors

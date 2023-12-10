@@ -21,14 +21,14 @@ workControler.post_filterWork = async (req, res) => {
   
   
       if (experience) {
-        query.yearsOfExperience =  parseInt(experience, 10); // Assuming experience is a number
+        query.yearsOfExperience =  parseInt(experience, 10);
       }
       if (experience > 5) {
-        query.yearsOfExperience = {$gte : parseInt(experience, 10)}; // Assuming experience is a number
+        query.yearsOfExperience = {$gte : parseInt(experience, 10)};
       }
 
       if (rating && rating !== "0") {
-        query.rating =  parseInt(rating, 10); // Assuming experience is a number
+        query.rating =  parseInt(rating, 10);
       }
   
       console.log({query})
@@ -37,7 +37,7 @@ workControler.post_filterWork = async (req, res) => {
       res.render('InteriorDesigners', { designWorks: filteredDesigners });
   
     } catch (error) {
-      // Handle any errors that occur during the query or processing
+      // Handle any errors
       console.error('Error processing filter:', error);
       res.status(500).json({ success: false, error: 'Internal Server Error' });
     }
@@ -214,8 +214,6 @@ if(!rating || rating == "0"){
 
   }
 }
-
-
 
 
 function calculateOverallRating(work) {

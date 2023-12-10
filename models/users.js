@@ -7,11 +7,9 @@ const userSchema = mongoose.Schema({
     lastName : String,
     email : {type : String , required : true , unique : true} ,
     phone : String,
+    whatsappOrTelegram: String,
     profilePic : String,
     password : String,
-    isActive : {type : Boolean , default : true},
-    isAdmin : {type : Boolean , default : false},
-    idVerified : {type : Boolean , default : false},
     idProof : String,
     wishList : [{
          type: mongoose.Types.ObjectId , ref : 'property' 

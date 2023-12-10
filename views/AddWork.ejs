@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <%- include("./partials/head.ejs") %>
-    <!-- <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" /> -->
 
     <link rel="stylesheet" type="text/css" href="/css/addwork-form.css">
     </head>
@@ -98,24 +97,6 @@
                             <input type="submit" value="Add">
                         </form>
 
-              
-
-                <!-- <div class="flex-col mapContainer">
-                    <input type="text" id="searchInput" placeholder="Search for a city or location"
-                        oninput="searchLocation()">
-
-                    <ul id="suggestionsList"></ul>
-
-                    <div id="map"></div>
-                </div>
-
-                <input type="text" id="latitude" name="latitude" value="">
-                <input type="text" id="longitude" name="longitude" value="">
-                <input type="text" id="city" name="city" value="">
-                <input type="text" id="country" name="country" value=""> -->
-
-
-
                 <script>
                                             function updateFileName() {
                                                 const fileInput = document.getElementById('id');
@@ -141,110 +122,6 @@
                                             });
                                         </script>
 
-<!-- 
-                <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-                <script src="https://api.opencagedata.com/geocode/v1/leaflet.js?key=4026bc360d8d4b2483b8443e2cc206a3"
-                    onload="initMap()"></script>
-                <script>
-                    var map;
-                    var marker;
-
-                    function initMap() {
-                        // Initialize the map
-                        map = L.map('map').setView([0, 0], 2);
-
-                        // Add a tile layer
-                        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                            attribution: '© OpenStreetMap contributors'
-                        }).addTo(map);
-
-                        // Add a marker
-                        marker = L.marker([0, 0], { draggable: true }).addTo(map);
-
-                        // Event listener to update form fields when the marker is moved
-                        marker.on('dragend', function (event) {
-                            var position = marker.getLatLng();
-                            // Update your form fields with the selected location
-                            document.getElementById('latitude').value = position.lat;
-                            document.getElementById('longitude').value = position.lng;
-                        });
-                    }
-
-
-
-                    function searchLocation() {
-                        var searchQuery = document.getElementById('searchInput').value;
-
-                        // Use the OpenCage Geocoding API to get the location coordinates
-                        fetch(`https://api.opencagedata.com/geocode/v1/json?q=${encodeURIComponent(searchQuery)}&key=4026bc360d8d4b2483b8443e2cc206a3`)
-                            .then(response => response.json())
-                            .then(data => {
-                                if (data.results && data.results.length > 0) {
-                                    var locations = data.results.map(result => ({
-                                        name: result.formatted,
-                                        city: result.components.city || result.components.town || result.components.village,
-                                        country: result.components.country,
-                                        lat: result.geometry.lat,
-                                        lng: result.geometry.lng,
-                                    }));
-                                    document.getElementById('suggestionsList').style.display = "flex";
-                                    updateSuggestionsList(locations);
-                                } else {
-                                    console.error('No results found for the search query.');
-                                }
-                            })
-                            .catch(error => {
-                                console.error('Error fetching location data:', error);
-                            });
-                    }
-
-
-
-                    function updateSuggestionsList(locations) {
-                        var suggestionsList = document.getElementById('suggestionsList');
-                        suggestionsList.innerHTML = '';
-                        // Add a close button to the suggestions list
-                        var closeButton = document.createElement('button');
-                        closeButton.classList.add('closeBtn')
-                        closeButton.textContent = 'X';
-                        closeButton.addEventListener('click', function () {
-                            // Hide the suggestions list when the close button is clicked
-                            suggestionsList.style.display = 'none';
-                        });
-                        suggestionsList.appendChild(closeButton);
-
-                        locations.forEach(location => {
-                            var listItem = document.createElement('li');
-                            listItem.textContent = location.name;
-                            listItem.addEventListener('click', function () {
-                                // Update the marker position
-                                marker.setLatLng([location.lat, location.lng]);
-
-                                // Focus and zoom on the clicked location
-                                map.setView([location.lat, location.lng], 12); // Adjust the zoom level as needed
-                                document.getElementById('latitude').value = location.lat;
-                                document.getElementById('longitude').value = location.lng;
-                                document.getElementById('city').value = location.city;
-                                document.getElementById('country').value = location.country;
-
-                                // Hide the suggestions list
-                                suggestionsList.style.display = 'none';
-                            });
-                            suggestionsList.appendChild(listItem);
-                        });
-
-                        // Show the suggestions list
-                        suggestionsList.style.display = 'block';
-                    }
-
-
-
-
-
-
-                    // Call initMap after the OpenCage Geocoding API script has loaded
-                    document.addEventListener('DOMContentLoaded', initMap);
-                </script> -->
                 <%- include("./partials/footer.ejs") %>
 
     </body>

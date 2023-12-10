@@ -1,7 +1,3 @@
-
-
-
-
 // faqs
 const faqQuestions = document.querySelectorAll('.faq-question');
     
@@ -35,10 +31,8 @@ stars.forEach((star) => {
     const selectedRating = event.target.getAttribute('data-rating');
     ratingInput.value = selectedRating;
 
-    // Remove 'selected' class from all stars
     stars.forEach((otherStar) => otherStar.classList.remove('selected'));
 
-    // Add 'selected' class to the clicked stars
     for (let i = 0; i < selectedRating; i++) {
       stars[i].classList.add('selected');
     }
@@ -93,7 +87,7 @@ closeAll.forEach((button) => {
     loginForm.style.display = "none";
   })
 });
-//code for login / signup buttons toggles ends
+
 
 
 
@@ -142,7 +136,7 @@ function toggleLabelColor(checkboxId) {
       label.classList.remove('selected-label');
   }
 }
-  // propety page scripts ends
+
 
 
 
@@ -151,9 +145,7 @@ function toggleLabelColor(checkboxId) {
  
 
 
-  // popup code for update user modal
-  // script.js
-
+// popup code for update user modal
 function openEditPopup() {
   document.getElementById("editPopup").style.display = "block";
 
@@ -164,16 +156,15 @@ function closeEditPopup() {
 }
 
 function updateUser() {
-  // Fetch the updated values
   var first_name = document.getElementById("firstNamee").value;
   var last_name = document.getElementById("lastNamee").value;
   var newEmail = document.getElementById("editEmail").value;
   var newPhone = document.getElementById("editPhone").value;
   var old_password = document.getElementById("old_password").value;
   var new_password = document.getElementById("new_password").value;
+  var whatsappOrTelegram = document.getElementById("editWhatsAppLink").value; // Add this line to get the new field
 
-  // Assuming you have a route in your Node.js server to handle updates
-  fetch('/updat_user', {
+  fetch('/update_user', { // Update the route to "/update_user"
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -181,24 +172,24 @@ function updateUser() {
     body: JSON.stringify({
       email: newEmail,
       phone: newPhone,
-      first_name : first_name,
-      last_name : last_name,
+      first_name: first_name,
+      last_name: last_name,
       old_password,
       new_password,
+      whatsappOrTelegram, // Add this line to include the new field
     }),
   })
-  .then(response => response.json())
-  .then(data => {
-    console.log({data})
-    if(data.success){
-      closeEditPopup(); 
-      window.location.reload()
-    }else{
-      
-      document.getElementById("msgError").innerHTML = data.error
-    }
-  })
-  .catch((error) => {
-    console.error('Error:', error);
-  });
+    .then(response => response.json())
+    .then(data => {
+      console.log({ data })
+      if (data.success) {
+        closeEditPopup();
+        window.location.reload();
+      } else {
+        document.getElementById("msgError").innerHTML = data.error;
+      }
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+    });
 }

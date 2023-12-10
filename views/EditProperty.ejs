@@ -4,9 +4,6 @@
     <link rel="stylesheet" type="text/css" href="/css/addproperty-form.css">
     </head>
 
- 
-
-
     <body>
 
         <%- include("./partials/header.ejs") %>
@@ -41,8 +38,36 @@
 
                                         <td>
                                             <label for="district">District:</label>
-                                            <input type="text" id="district" name="district" value="<%= property.district %>" required>
+                                            <select name="district" id="district">
+                                                <option value="Al Dar Al Baida" <%= property.district === 'Al Dar Al Baida' ? 'selected' : '' %>>Al Dar Al Baida</option>
+                                                <option value="Al Aziziyah" <%= property.district === 'Al Aziziyah' ? 'selected' : '' %>>Al Aziziyah</option>
+                                                <option value="Al Aqiq" <%= property.district === 'Al Aqiq' ? 'selected' : '' %>>Al Aqiq</option>
+                                                <option value="Al Ghadir" <%= property.district === 'Al Ghadir' ? 'selected' : '' %>>Al Ghadir</option>
+                                                <option value="Al Hamra" <%= property.district === 'Al Hamra' ? 'selected' : '' %>>Al Hamra</option>
+                                                <option value="Al Iskan" <%= property.district === 'Al Iskan' ? 'selected' : '' %>>Al Iskan</option>
+                                                <option value="Al Malaz" <%= property.district === 'Al Malaz' ? 'selected' : '' %>>Al Malaz</option>
+                                                <option value="Al Manar" <%= property.district === 'Al Manar' ? 'selected' : '' %>>Al Manar</option>
+                                                <option value="Al Murabba" <%= property.district === 'Al Murabba' ? 'selected' : '' %>>Al Murabba</option>
+                                                <option value="Al Nakhil" <%= property.district === 'Al Nakhil' ? 'selected' : '' %>>Al Nakhil</option>
+                                                <option value="Al Narjis" <%= property.district === 'Al Narjis' ? 'selected' : '' %>>Al Narjis</option>
+                                                <option value="Al Olaya" <%= property.district === 'Al Olaya' ? 'selected' : '' %>>Al Olaya</option>
+                                                <option value="Al Qayrawan" <%= property.district === 'Al Qayrawan' ? 'selected' : '' %>>Al Qayrawan</option>
+                                                <option value="Al Rabwah" <%= property.district === 'Al Rabwah' ? 'selected' : '' %>>Al Rabwah</option>
+                                                <option value="Al Raid" <%= property.district === 'Al Raid' ? 'selected' : '' %>>Al Raid</option>
+                                                <option value="Al Rawdah" <%= property.district === 'Al Rawdah' ? 'selected' : '' %>>Al Rawdah</option>
+                                                <option value="Al Rayyan" <%= property.district === 'Al Rayyan' ? 'selected' : '' %>>Al Rayyan</option>
+                                                <option value="Al Sahafa" <%= property.district === 'Al Sahafa' ? 'selected' : '' %>>Al Sahafa</option>
+                                                <option value="Al Salam" <%= property.district === 'Al Salam' ? 'selected' : '' %>>Al Salam</option>
+                                                <option value="Al Sulaimaniyah" <%= property.district === 'Al Sulaimaniyah' ? 'selected' : '' %>>Al Sulaimaniyah</option>
+                                                <option value="Al Woroud" <%= property.district === 'Al Woroud' ? 'selected' : '' %>>Al Woroud</option>
+                                                <option value="Hittin" <%= property.district === 'Hittin' ? 'selected' : '' %>>Hittin</option>
+                                                <option value="Irqah" <%= property.district === 'Irqah' ? 'selected' : '' %>>Irqah</option>
+                                                <option value="Jarir" <%= property.district === 'Jarir' ? 'selected' : '' %>>Jarir</option>
+                                                <option value="Umm Al-Hamam (East)" <%= property.district === 'Umm Al-Hamam (East)' ? 'selected' : '' %>>Umm Al-Hamam (East)</option>
+                                                <option value="Umm Al-Hamam (West)" <%= property.district === 'Umm Al-Hamam (West)' ? 'selected' : '' %>>Umm Al-Hamam (West)</option>
+                                            </select>
                                         </td>
+                                        
                                         <td>
                                             <label for="numRooms">Number of Rooms:</label>
                                             <input type="number" id="numRooms" name="numRooms" value="<%= property.rooms %>"  required min="0">

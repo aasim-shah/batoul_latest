@@ -42,8 +42,7 @@ app.use(session({
 
 
 // mongodb connection
-// mongoose.connect('mongodb://0.0.0.0:27017/Homekey', {
-  mongoose.connect('mongodb+srv://Haifa:Homekey@web.g9ukbvh.mongodb.net/Homekeyy?retryWrites=true&w=majority', {
+  mongoose.connect('mongodb+srv://Haifa:Homekey@web.g9ukbvh.mongodb.net/Homekey?retryWrites=true&w=majority', {
 
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -53,7 +52,6 @@ app.use(session({
 
 
 // initializing passportjs
-
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -175,12 +173,12 @@ app.post('/login',
 
   });
 
-app.get('/inpsectionTeam', (req, res) => {
-  res.render('inspectionTeam', { error: { first_name: null, last_name: null, email: null, user_inquiry: null } });
+app.get('/InspectionTeam', (req, res) => {
+  res.render('InspectionTeam', { error: { first_name: null, last_name: null, email: null, user_inquiry: null } });
 });
 
 
-app.post('/inpsectionTeam', (req, res) => {
+app.post('/InspectionTeam', (req, res) => {
   console.log(req.body)
   const {first_name, last_name , email, user_inquiry } = req.body
   if (!first_name || first_name == "") {
@@ -198,9 +196,10 @@ app.post('/inpsectionTeam', (req, res) => {
     return res.render('inspectionTeam', { error: { first_name: null,  last_name: null, email: null, user_inquiry: "User Inquiry is required !" } });
   }
 
-
-  res.redirect('/inpsectionTeam');
+  res.redirect('/');
 });
+
+
 
 
 
@@ -212,12 +211,12 @@ app.post("/signup", async (req, res) => {
   console.log(req.body)
   const userExists = await User.findOne({ email })
   if (userExists) {
-    return res.render('Homepage', { form: "signup", msg: { phone : null , email: "Email Already Registered !", password: null, last_name: null, first_name: null }, data: req.body });
+    return res.render('Homepage', { form: "signup", msg: { phone : null , email: "Email already Registered !", password: null, last_name: null, first_name: null }, data: req.body });
 
   }
   const phonexists = await User.findOne({ phone })
   if (phonexists) {
-    return res.render('Homepage', { form: "signup", msg: {  phone : "Phone Number Already exists !", password: null, last_name: null, first_name: null }, data: req.body });
+    return res.render('Homepage', { form: "signup", msg: {  phone : "Phone Number already Registered !", password: null, last_name: null, first_name: null }, data: req.body });
 
   }
 
@@ -226,24 +225,24 @@ app.post("/signup", async (req, res) => {
 
   }
   if (phone.length !== 9) {
-    return res.render('Homepage', { form: "signup", msg: {  email: null, phone: "Number Should Must be 9 digits !", password: null, last_name: null, first_name: null }, data: req.body });
+    return res.render('Homepage', { form: "signup", msg: {  email: null, phone: "Phone Number must be 9 digits !", password: null, last_name: null, first_name: null }, data: req.body });
 
   }
   if (!first_name) {
-    return res.render('Homepage', { form: "signup", msg: { phone : null,  email: null, password: null, last_name: null, first_name: "First Name is Requied !" }, data: req.body });
+    return res.render('Homepage', { form: "signup", msg: { phone : null,  email: null, password: null, last_name: null, first_name: "First Name is Required !" }, data: req.body });
 
   }
   if (!last_name) {
-    return res.render('Homepage', { form: "signup", msg: { phone : null , email: null, password: null, last_name: "Last Name is required !", first_name: null }, data: req.body });
+    return res.render('Homepage', { form: "signup", msg: { phone : null , email: null, password: null, last_name: "Last Name is Required !", first_name: null }, data: req.body });
 
   }
   if (password.length < 8) {
-    return res.render('Homepage', { form: "signup", msg: {  phone: null , email: null, password: "Password must be of 8 letters !", last_name: null, first_name: null }, data: req.body });
+    return res.render('Homepage', { form: "signup", msg: {  phone: null , email: null, password: "Password must be 8 digits !", last_name: null, first_name: null }, data: req.body });
 
   }
 
   if (!passwordRegex.test(password)) {
-    return res.render('Homepage', { form: "signup", msg: {  phone: null , email: null, password: "Password must be validated  !", last_name: null, first_name: null }, data: req.body });
+    return res.render('Homepage', { form: "signup", msg: {  phone: null , email: null, password: "Password must follow the Password Rules !", last_name: null, first_name: null }, data: req.body });
 
   }
 
@@ -276,54 +275,50 @@ app.get('/InspectionTeam', (req, res) => {
 });
 
 
-app.post("/updat_user", async (req, res) => {
-  console.log(req.body)
-  const { name, email, first_name, last_name, phone, old_password, new_password } = req.body
+app.post("/update_user", async (req, res) => {
+  console.log(req.body);
+  const { name, email, first_name, last_name, phone, old_password, new_password, whatsappOrTelegram } = req.body;
   const passwordRegex = /^(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.*\d).{8,}$/;
 
   try {
-    const user = await User.findOne({ email })
+    const user = await User.findOne({ email });
     if (!user) {
-      return res.json({ success: false, error: "User Not Found! " })
+      return res.json({ success: false, error: "User Not Found!" });
     }
     if (phone.length !== 9) {
-      return res.json({ success: false, error: "Phone must be 9 digits ! " })
+      return res.json({ success: false, error: "Phone must be 9 digits!" });
     }
 
-    if (!first_name || first_name == "" || !last_name || last_name == "") {
-      return res.json({ success: false, error: "First and Last name fields are required  ! " })
+    if (!first_name || first_name === "" || !last_name || last_name === "") {
+      return res.json({ success: false, error: "First and Last name fields are required!" });
     }
-
 
     const passwordMatch = await bcrypt.compare(old_password, user.password);
     if (!passwordMatch) {
-      return res.json({ success: false, error: "Old Password doesn't matched   ! " })
+      return res.json({ success: false, error: "Old Password doesn't match!" });
     }
     if (new_password.length < 8) {
-      return res.json({ success: false, error: "New Password should be at least 8 digits  ! " })
+      return res.json({ success: false, error: "New Password should be at least 8 digits!" });
     }
 
     if (!passwordRegex.test(new_password)) {
-      return res.json({ success: false, error: "New Password should follow the Regix Rules  ! " })
+      return res.json({ success: false, error: "New Password should follow the Password Rules!" });
     }
 
-    const newHash = await bcrypt.hashSync(new_password, 10)
-    user.fullname = name
-    user.firstName = first_name
-    user.lastName = last_name
-    user.phone = phone
-    user.password = newHash
-    await user.save()
-    return res.status(200).send({ success: true, message: 'Updated Successfully' })
-
+    const newHash = await bcrypt.hashSync(new_password, 10);
+    user.fullname = name;
+    user.firstName = first_name;
+    user.lastName = last_name;
+    user.phone = phone;
+    user.password = newHash;
+    user.whatsappOrTelegram = whatsappOrTelegram; // Set the new field
+    await user.save();
+    return res.status(200).send({ success: true, message: 'Updated Successfully' });
   } catch (error) {
-    res.json({ success: false, error: "Something went wrong !" })
+    console.error('Error:', error);
+    res.json({ success: false, error: "Something went wrong!" });
   }
-  console.log(req.body)
-})
-
-
-
+});
 
 
 

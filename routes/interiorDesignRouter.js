@@ -47,7 +47,7 @@ const isAuthenticated = async (req, res, next) => {
   
   
   
-  interiorDesignRouter.post('/filterDesignWorks', isAuthenticated , workControler.post_filterWork);
+  interiorDesignRouter.post('/filterDesignWorks' , workControler.post_filterWork);
   
   
 

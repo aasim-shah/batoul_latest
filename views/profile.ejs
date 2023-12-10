@@ -20,40 +20,49 @@
                             <%= user.firstName %> 
                             <span class="ml-1"> <%= user.lastName %> </span>
                         </p>
+
                         <p class="mb-2 h5"><span>Phone : </span> <small> +966-<%= user.phone %></small></p>
-                        <p class="h5"><span>Email : </span> <small>
-                                <%= user.email %>
-                            </small></p>
+
+                        <p class="h5"><span>Email : </span> 
+                            <small> <%= user.email %> </small>
+                        </p>
+                        <br>
+                        <p class="h7"> WhatsApp or Telegram: <a href="<%= user.whatsappOrTelegram %>"><%= user.whatsappOrTelegram %></a></p>
+                        <br>
                         <a href="/logout" class="btn btn-danger h4 mt-3">Logout</a>
 
                         <!-- popup code for edit user modal  -->
                         <div id="editPopup" style="display: none; top: 27rem;">
                             <p style="font-size: 13px;" class=" text-danger mb-4  alert-warning text-center rouneded" id="msgError"></p>
-                            <!-- <label for="editName">Name:</label>
-                            <input type="text" class="form-control" id="editName" value="<%= user.fullname %>"> -->
                             <div class="flex-row mb-3" style="align-items: start;gap: 1rem;">
                               <div class="d-flex flex-column">
-                                <label for="firstNamee">First Name</label> 
-                                <input type="text" class="inputField" id="firstNamee" value="<%= user.firstName %>" name="first_name"  placeholder=" First Name ...">
+                                <label for="firstNamee">First Name:</label> 
+                                <input type="text" class="form-control" id="firstNamee" value="<%= user.firstName %>" name="first_name"  placeholder=" First Name ...">
                                 
                               </div>
                               <div class="d-flex flex-column">
-                                <label for="lastNamee">Last Name</label> 
-                                <input type="text" class="inputField"  value="<%= user.lastName %>" id="lastNamee" name="last_name"  placeholder="Last Name ...">
+                                <label for="lastNamee">Last Name:</label> 
+                                <input type="text" class="form-control"  value="<%= user.lastName %>" id="lastNamee" name="last_name"  placeholder="Last Name ...">
                               </div>
                                </div>
 
                             <label for="editEmail">Email:</label>
-                            <input type="text" readonly class="form-control" id="editEmail"
+                            <input type="text" class="form-control" id="editEmail"
                                 value="<%= user.email %>"><br>
 
                             <label for="editPhone">Phone:</label>
                             <input type="number" id="editPhone" class="form-control" value="<%= user.phone %>"><br>
+
+                            <!-- Add this section inside your edit user modal -->
+                            <label for="editWhatsAppLink">WhatsApp or Telegram link:</label>
+                            <input type="text" class="form-control" id="editWhatsAppLink" value="<%= user.whatsappOrTelegram %>" placeholder="WhatsApp or Telegram link ..."><br>
+
                             <label for="old_password">Old Password:</label>
                             <input type="password" placeholder="Enter Your Old Password ..." id="old_password" class="form-control" ><br>
+
                             <label for="new_password">New Password:</label>
                             <input type="password" placeholder="Enter New Password" id="new_password" class="form-control"><br>
-                            <small class="text-start " style="font-size: 10px;">
+                            <small class="text-start " style="font-size: 16px;">
                                 Password Rules
                                 <ul class="ms-2">
                                     <li>Password Must contain 1 capital letter</li>
@@ -70,11 +79,8 @@
                                 
                             </div>
                         </div>
-                        <!-- popup code for edit user modal  -->
-
-
-
                     </div>
+
                     <div class="mx-auto " style="width: 65%; ">
                         <p class="h3 mx-4">MY Properties </p>
 
@@ -203,11 +209,6 @@
                     </div>
 
                 </section>
-
-
-
-
-
 
                 <%- include("./partials/footer.ejs") %>
 

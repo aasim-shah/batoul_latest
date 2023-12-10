@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <%- include("./partials/head.ejs") %>
-    <!-- <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" /> -->
 
     <link rel="stylesheet" type="text/css" href="/css/addwork-form.css">
     </head>
@@ -82,9 +81,8 @@
                                 <small style="font-size: 13px;" class="text-danger mb-3 text-start"><%= error.yearsOfExperience ? error.yearsOfExperience : "" %></small>
 
                                 <label for="description">Description:</label>
-                                <textarea id="description" class="mb-0" name="description" rows="4" cols="50" >
-                                    <%= designWork.description  %>
-                                </textarea><br><br>
+                                <textarea id="description" class="mb-0" name="description" rows="4" cols="50"><%= designWork.description %></textarea><br><br>
+                                <br><br>
                                 <small style="font-size: 13px;" class="text-danger   text-start"><%= error.description ? error.description : "" %></small>
 
                     

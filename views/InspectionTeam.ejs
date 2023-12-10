@@ -1,50 +1,102 @@
 <!DOCTYPE html>
 <html lang="en">
-    <%- include("./partials/head.ejs") %>
-    <link rel="stylesheet" type="text/css" href="/css/inspectionteam-form.css">
+<%- include("./partials/head.ejs") %>
+<link rel="stylesheet" type="text/css" href="/css/inspectionteam-form.css">
 </head>
 <body>
 
-    <%- include("./partials/header.ejs") %>
-    <%- include("./partials/popup.ejs") %>
+<%- include("./partials/header.ejs") %>
+<%- include("./partials/popup.ejs") %>
 
-        
-    <fieldset style="margin-top: 18rem; margin-bottom: 4rem; height: 45rem; width: 40rem;">
-      <legend>Inspection Team Request Form</legend>
-        <!--add action link-->
-        <form action="/inpsectionTeam" method="post"  style="padding: 1rem;">
-            <div class="d-flex mb-2 flex-column">
-              <label for="first_name">First Name:</label>
-            <input type="text" id="first_name" name="first_name" >
-            <small class="text-danger my-1 text-start"><%= error.first_name ? error.first_name : "" %></small>
-            </div>
+  <fieldset style="margin-top: 18rem; margin-bottom: 4rem; height: auto; max-width: 40rem;">
+    <legend>Inspection Team Request Form</legend>
+  
+    <form id="inspectionForm" action="https://formspree.io/f/xvojewbp" method="post" style="padding: 1rem;">
+      <div class="d-flex mb-2 flex-column">
+        <label for="first_name1">First Name:</label>
+        <input type="text" id="first_name1" name="first_name">
+        <small class="text-danger my-1 text-start" id="error_first_name1"></small>
+      </div>
+      
+      <div class="d-flex mb-2 flex-column">
+        <label for="last_name1">Last Name:</label>
+        <input type="text" id="last_name1" name="last_name">
+        <small class="text-danger my-1 text-start" id="error_last_name1"></small>
+      </div>
+      
+      <div class="d-flex mb-2 flex-column">
+        <label for="email1">Email:</label>
+        <input type="email" id="email1" name="email">
+        <small class="text-danger my-1 text-start" id="error_email1"></small>
+      </div>
+      
+      <div class="d-flex mb-2 flex-column">
+        <label for="user_inquiry1">User Inquiry:</label>
+        <textarea id="user_inquiry1" name="user_inquiry" rows="4" cols="50"></textarea>
+        <small class="text-danger my-1 text-start" id="error_user_inquiry1"></small>
+      </div>
+      
+      <button type="button" id="submit1" onclick="validateForm1()">Submit</button>      
+    </form>
+  
+  </fieldset>
+  
+  <script>
+    function validateForm1() {
+      var firstName = document.getElementById('first_name1').value;
+      var lastName = document.getElementById('last_name1').value;
+      var email = document.getElementById('email1').value;
+      var userInquiry = document.getElementById('user_inquiry1').value;
+    
+      console.log("Debugging form validation...");
+      
+      // Reset error messages
+      document.getElementById('error_first_name1').innerHTML = "";
+      document.getElementById('error_last_name1').innerHTML = "";
+      document.getElementById('error_email1').innerHTML = "";
+      document.getElementById('error_user_inquiry1').innerHTML = "";
+    
+      // Basic validation, you can add more specific checks
+      if (firstName === "") {
+        console.log("First Name validation failed");
+        document.getElementById('error_first_name1').innerHTML = "First Name must be filled.";
+      }
+    
+      if (lastName === "") {
+        console.log("Last Name validation failed");
+        document.getElementById('error_last_name1').innerHTML = "Last Name must be filled.";
+      }
+    
+      if (email === "") {
+        console.log("Email validation failed");
+        document.getElementById('error_email1').innerHTML = "Email must be filled.";
+      }
+    
+      if (userInquiry === "") {
+        console.log("User Inquiry validation failed");
+        document.getElementById('error_user_inquiry1').innerHTML = "User Inquiry must be filled.";
+      }
+    
+      // If any error messages are displayed, do not submit the form
+      if (
+        document.getElementById('error_first_name1').innerHTML !== "" ||
+        document.getElementById('error_last_name1').innerHTML !== "" ||
+        document.getElementById('error_email1').innerHTML !== "" ||
+        document.getElementById('error_user_inquiry1').innerHTML !== ""
+      ) {
+        console.log("Form validation failed");
+        return;
+      }
+    
+      // Log to console for debugging
+      console.log("Submitting form to Formspree...");
+    
+      // If all validations pass, submit the form
+      document.getElementById('inspectionForm').submit();
+    }
+    </script>    
 
-
-            <div class="d-flex mb-2 flex-column">
-            <label for="last_name">Last Name:</label>
-            <input type="text" id="last_name" name="last_name" >
-            <small class="text-danger my-1 text-start"><%= error.last_name ? error.last_name : "" %></small>
-          </div>
-
-
-          <div class="d-flex mb-2 flex-column">
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" >
-            <small class="text-danger my-1 text-start"><%= error.email ? error.email : "" %></small>
-          </div>
-
-
-          <div class="d-flex mb-2 flex-column">
-            <label for="user_inquiry">User Inquiry:</label>
-            <textarea id="user_inquiry" name="user_inquiry" rows="4" cols="50" ></textarea><br><br>
-            <small class="text-danger my-1 text-start"><%= error.user_inquiry ? error.user_inquiry : "" %></small>
-          </div>
-
-            <button type="submit" id="submit">Submit</button>
-          </fieldset>
-        </form>
-
-    <%- include("./partials/footer.ejs") %>
+<%- include("./partials/footer.ejs") %>
 
 </body>
 </html>

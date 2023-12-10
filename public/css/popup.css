@@ -16,3 +16,25 @@
 .popup-content {
     text-align: center;
 }
+
+#editPopup {
+    z-index: 1100;
+}
+
+@media (max-width: 768px) {
+    #editPopup {
+        top: 10%;
+        width: 90%;
+        margin: 0 auto;
+    }
+
+    .flex-row {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 576px) {
+    #editPopup {
+        top: 5%;
+    }
+}

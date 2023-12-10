@@ -38,9 +38,9 @@
                                     designWork.yearsOfExperience %></span>
                                     <small class="h3  text-warning" style="font-weight: 800;"><%=   ["*".repeat(designWork.rating)]  %></small>
                             </p>
-                            <!-- <p style="font-weight: 500; margin-bottom: .5rem;"> : </p> -->
-                            <p> Description : <%= designWork.description %>
-                            </p>
+
+                            <p> Description : <%= designWork.description %></p>
+
                         </div>
                     </div>
                     <div class="dd-right">
@@ -53,13 +53,18 @@
                                 </div>
                                 <div class="d-flex flex-column">
                                     <p class="username" style="font-size: 1rem; margin-bottom: 0.4rem;">Designer Name :
-                                        <%= user?.fullname %>
+                                            <%= user.firstName %> 
+                                            <span class="ml-1"> <%= user.lastName %> </span>
                                     </p>
                                     <p style="margin: .5rem 0px; "><span>Phone : </span> <small>+966 - <%= user?.phone
                                                 %></small></p>
                                     <p><span>Email : </span> <small>
                                             <%= user?.email %>
-                                        </small></p>
+                                        </small>
+                                    </p>
+                                    <br>
+                                    <p> WhatsApp or Telegram: <a href="<%= user.whatsappOrTelegram %>"><%= user.whatsappOrTelegram %></a></p>
+
                                 </div>
                             </div>
 
@@ -114,9 +119,6 @@
                             <button type="submit" class="btn bisqueBtn mt-3">Submit</button>
                         </form>
                     </div>
-                <!-- <section  class="map_container">
-                    <p>Map will be Desplyed here :)</p>
-                </section> -->
 
 
                 <%- include("./partials/footer.ejs") %>
