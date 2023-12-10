@@ -53,17 +53,17 @@
                                 </div>
                                 <div class="d-flex flex-column">
                                     <p class="username" style="font-size: 1rem; margin-bottom: 0.4rem;">Designer Name :
-                                            <%= user.firstName %> 
-                                            <span class="ml-1"> <%= user.lastName %> </span>
+                                            <%= designWork.userId?.firstName %> 
+                                            <span class="ml-1"> <%= designWork.userId?.lastName %> </span>
                                     </p>
-                                    <p style="margin: .5rem 0px; "><span>Phone : </span> <small>+966 - <%= user?.phone
+                                    <p style="margin: .5rem 0px; "><span>Phone : </span> <small>+966 - <%= designWork.userId?.phone
                                                 %></small></p>
                                     <p><span>Email : </span> <small>
-                                            <%= user?.email %>
+                                            <%= designWork.userId?.email %>
                                         </small>
                                     </p>
                                     <br>
-                                    <p> WhatsApp or Telegram: <a href="<%= user.whatsappOrTelegram %>"><%= user.whatsappOrTelegram %></a></p>
+                                    <p> WhatsApp or Telegram: <a href="<%= designWork.userId?.whatsappOrTelegram %>"><%= designWork.userId?.whatsappOrTelegram %></a></p>
 
                                 </div>
                             </div>
